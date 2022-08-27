@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}mir-app-{{owner_name}}{% endblock title %}
+
+{%block inner_body %}
+
+            <!-- Page Content-->
+            <section class="py-5">
+                <div class="container px-5">
+                    <h1 class="fw-bolder fs-5 mb-4">Surveys in progress</h1>
+                    <div class="card border-0 shadow rounded-3 overflow-hidden">
+                        <div class="card-body p-0">
+                            <div class="row gx-0">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="py-5 bg-light">
+                <div class="container px-5">
+                    <div class="row gx-5">
+                        <div class="col-xl-8">
+                            <!--<h2 class="fw-bolder fs-5 mb-4">Your surveys in progress</h2>-->
+
+                            {% if surveys %}
+                            {% for vessel in vessels %}
+                                <div class="mb-4">
+                                    <a class="link-dark" href="#"><h3>{{vessel.1}} | {{vessel.2}}</h3></a>
+                                </div>
+                            {% endfor %}
+                            {% else %}
+                                <div class="mb-4">
+                                    <h3>There are no surveys in progress.</h3>
+                                </div>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+{% endblock inner_body %}
+
+

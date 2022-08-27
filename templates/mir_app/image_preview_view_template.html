@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}mir-app-photo-preview{% endblock title %}
+
+
+{%block inner_body %}
+
+            <!-- Page Content-->
+            <section class="py-5">
+                <div class="container px-5 my-5">
+                    <div class="text-center mb-5">
+                        <h1 class="fw-bolder"><a href="https://trello.com/c/TXhPElpY/45-rv220-vessel-part-survey-photos-preview">RV.22.0 Vessel-part survey photos preview</a></h1>
+                        <p class="lead fw-normal text-muted mb-0">Preview photos for {{vessel_part}}/{{vessel_subpart}}</p>
+                    </div>
+                    <div class="row gx-5">
+
+                        {% for image in images %}
+                        <div class="col-lg-6">
+                            <div class="position-relative mb-5">
+                                <!--<img class="img-fluid rounded-3 mb-3" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." />-->
+                                <img class="img-fluid rounded-3 mb-3" src="{{ media_url }}/{{ image }}" alt="..." />
+                                <a class="h4 fw-bolder text-decoration-none link-dark stretched-link" href="#!">{{ image }}</a>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+
+                    </div>
+                </div>
+            </section>
+            <section class="py-5 bg-light">
+                <div class="container px-5 my-5">
+                    <a class="btn btn-lg btn-primary" href="{% url 'submit_photos' owner_id vessel_id survey_id vessel_part vessel_subpart %}">Submit photos</a>
+                    <p>By submitting the photos you agree to T&Cs</p>
+                </div>
+            </section>
+{% endblock inner_body %}

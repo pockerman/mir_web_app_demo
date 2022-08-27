@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}mir-app-{{owner_name}}{% endblock title %}
+
+{%block inner_body %}
+
+            <!-- Page Content-->
+            <section class="py-5">
+                <div class="container px-5">
+                    <h1 class="fw-bolder fs-5 mb-4"><a href="https://trello.com/c/P336rxOD/36-rv60-surveyor-profile-view">RV.6.0 Surveyor profile view</a></h1>
+                    <div class="card border-0 shadow rounded-3 overflow-hidden">
+                        <div class="card-body p-0">
+                            <div class="row gx-0">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="py-5 bg-light">
+                <div class="container px-5">
+                    <div class="row gx-5">
+                        <div class="col-xl-8">
+                            <h2 class="fw-bolder fs-5 mb-4">Your survey requests</h2>
+
+
+                            {% for survey_req in survey_reqs %}
+                                <div class="mb-4">
+                                    <a class="link-dark" href="{% url 'surveyor_survey_view' surveyor_id survey_req.1 %}"><h3>{{ survey_req.0 }}</h3></a>
+                                </div>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+{% endblock inner_body %}
+
+

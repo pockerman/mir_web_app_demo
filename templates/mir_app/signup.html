@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}mir-app-signup{% endblock title %}
+
+{%block inner_body %}
+
+            <!-- Page content-->
+            <section class="py-5">
+                <div class="container px-5">
+                    <!-- Contact form-->
+                    <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
+                        <div class="text-center mb-5">
+                            <h1 class="fw-bolder"><a href="https://trello.com/c/WJCP3pn1/1-rv31-sign-up-owner-on-mir-app">RV.3.1 Sign up owner on mir-app</a></h1>
+                            <p class="lead fw-normal text-muted mb-0">As an owner</p>
+                        </div>
+                        <div class="row gx-5 justify-content-center">
+                            <div class="col-lg-8 col-xl-6">
+                                <form id="ownerLoginForm" method="post"  action="/signup/">
+                                    {% csrf_token %}
+
+
+                                    <!-- Email address input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="id_owner_name" name="owner_name" type="text" placeholder="name@example.com" data-sb-validations="required, email" />
+                                        <label for="id_owner_name">your name</label>
+                                        <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
+                                        <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+                                    </div>
+
+                                     <div class="form-floating mb-3">
+                                        <input class="form-control" id="id_owner_surname" name="owner_surname" type="text" placeholder="name@example.com" data-sb-validations="required, email" />
+                                        <label for="id_owner_surname">your surname</label>
+                                        <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
+                                        <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+                                    </div>
+
+
+                                    <!-- Email address input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="id_owner_email" name="owner_email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
+                                        <label for="id_owner_email">email address</label>
+                                        <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
+                                        <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+                                    </div>
+
+                                    <!-- password input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="id_owner_password" name="owner_password"
+                                               type="password" placeholder="Enter your password..." data-sb-validations="required" />
+                                        <label for="id_owner_password">password</label>
+                                        <div class="invalid-feedback" data-sb-feedback="name:required">A valid password is required.</div>
+                                    </div>
+
+                                     <!-- password input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="id_owner_password_confirm" name="owner_password_confirm"
+                                               type="password" placeholder="Enter your password..." data-sb-validations="required" />
+                                        <label for="id_owner_password_confirm">confirm password</label>
+                                        <div class="invalid-feedback" data-sb-feedback="name:required">A valid password is required.</div>
+                                    </div>
+
+                                    <!-- This is what your users will see when there is-->
+                                    <!-- an error submitting the form-->
+                                    <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
+                                    <!-- Submit Button-->
+                                    <div class="d-grid"><button class="btn btn-primary btn-lg" id="ownerLoginSubmitButton" type="submit">Submit</button></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+{% endblock inner_body %}

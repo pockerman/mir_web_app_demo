@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}mir-app-condition-survey-view{% endblock title %}
+
+{%block inner_body %}
+
+            <!-- Page Content-->
+<section class="py-5" xmlns="http://www.w3.org/1999/html">
+                <div class="container px-5">
+                    <h1 class="fw-bolder fs-5 mb-4"><a href="https://trello.com/c/NyQfUrdN/7-rv190-generate-condition-vessel-survey">RV.19.0 Generate Condition vessel survey</a></h1>
+                    <div class="card border-0 shadow rounded-3 overflow-hidden">
+                        <div class="card-body p-0">
+                            <div class="row gx-0">
+                                <div class="p-4 p-md-5">
+                                <p>Let's check the condition of your vessel {{ owner_name }}. This may take some time
+                                    but you can always save the survey and come back later.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="py-5 bg-light">
+                <div class="container px-5">
+                    <div class="row gx-5">
+                        <div class="col-xl-8">
+                            <h2 class="fw-bolder fs-5 mb-4">Vessel parts to survey (max 5 photos per structure part totaling  500 MB)</h2>
+                            <ul>
+                            {% for vessel_part in vessel_parts %}
+                              <li>
+
+                                  <a href="#">{{ vessel_part.0 }} (A structure consisting of many parts to survey)</a>
+
+                                  {% for sub_part in vessel_part.1 %}
+                                    <li>
+                                      <a href="{% url 'take_survey_photo_view' survey_id=survey_id owner_id=owner_id vessel_id=vessel_id vessel_part=vessel_part.0 vessel_subpart=sub_part %}">{{ sub_part }}</a>
+                                    </li>
+                                  {% endfor %}
+
+
+                              </li>
+                            {% endfor %}
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+           <section class="py-5 bg-light">
+                <div class="container px-5 my-5">
+                    <a class="btn btn-lg btn-primary" href="{% url 'submit_survey' owner_id vessel_id survey_id %}">Submit survey</a>
+                    <p>By submitting the survey you agree to T&Cs</p>
+                </div>
+           </section>
+            <!-- Blog preview section-->
+{% endblock inner_body %}
+
+

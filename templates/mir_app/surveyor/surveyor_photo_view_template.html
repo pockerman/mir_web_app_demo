@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block title %}mir-app-take-photo{% endblock title %}
+
+{%block inner_body %}
+
+
+<!-- Page content-->
+<section class="py-5" xmlns="http://www.w3.org/1999/html">
+                <div class="container px-5">
+                    <!-- Contact form-->
+                    <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
+                        <div class="text-center mb-5">
+                            <!--<div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-envelope"></i></div>-->
+                            <h1 class="fw-bolder"><a href="https://trello.com/c/O84M3cNn/64-rv33-view-vessel-part-subpart-photo">RV.33. View vessel-part subpart photo</a></a></h1>
+                            <p class="lead fw-normal text-muted mb-0">... not of yourself</p>
+                        </div>
+
+                         <div class="text-center mb-5">
+                             <p class="lead fw-normal text-muted mb-0">Inspect the image and act...</p>
+                        </div>
+
+                        <div class="row gx-5 justify-content-center">
+                            <div class="col-lg-8 col-xl-6">
+                                <form id="vesselPartPhotoForm" enctype="multipart/form-data" method="post"  action=".">
+
+                                    {% csrf_token %}
+
+                                    <div class="col-lg-6">
+                                        <div class="position-relative mb-5">
+
+                                            <img class="img-fluid rounded-3 mb-4" src="{{ media_url }}/{{ img_url }}" alt="..." />
+                                            <a class="h4 fw-bolder text-decoration-none link-dark stretched-link" href="#!">{{ img_file_name }}</a>
+                                        </div>
+                                    </div>
+
+                                    <!-- password input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="id_image_labels" name="image_labels"
+                                               type="text" placeholder="You need to attach at least one label to the image" data-sb-validations="required" />
+                                        <label for="id_image_labels">A comma separated list of labels</label>
+                                    </div>
+
+                                     <!-- Message input-->
+                                    <div class="form-floating mb-3">
+
+                                        <textarea class="form-control" id="id_findings" type="text" placeholder="Enter your message here..."
+                                                  style="height: 10rem" data-sb-validations="required"></textarea>
+                                        <label for="id_findings">Your findings</label>
+                                        <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
+                                    </div>
+
+                                     <div class="form-floating mb-3">
+                                        <textarea class="form-control" id="id_recommendations" type="text" placeholder="Enter your message here..."
+                                                  style="height: 10rem" data-sb-validations="required"></textarea>
+                                        <label for="id_recommendations">Your recommendations</label>
+                                        <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
+                                    </div>
+
+                                    <div class="form-floating mb-4">
+                                        <input class="form-control form-check-input" id="id_use_report_img" name="image_labels"
+                                               type="checkbox" placeholder="" data-sb-validations="optional"/>
+                                        <label for="id_use_report_img" class="form-check-label">Include in report</label>
+                                    </div>
+
+                                    <!-- This is what your users will see when there is-->
+                                    <!-- an error submitting the form-->
+                                    <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
+
+                                    <!-- Submit Button-->
+                                    <div class="d-grid"><button class="btn btn-primary btn-lg" id="ownerPhotSubmitButton" type="submit">Submit photo review</button></div>
+                                    <br/>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+<script>
+
+const chooseFile = document.getElementById("id_image");
+const imgPreview = document.getElementById("img-preview");
+chooseFile.addEventListener("change", function () {
+  getImgData();
+});
+
+function getImgData() {
+  const files = chooseFile.files[0];
+  if (files) {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(files);
+    fileReader.addEventListener("load", function () {
+      imgPreview.style.display = "block";
+      imgPreview.innerHTML = '<img src="' + this.result + '" />';
+    });
+  }
+}
+</script>
+{% endblock inner_body %}
