@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}mir-app-verify-email{% endblock title %}
+
+{%block inner_body %}
+
+             <!-- Page content-->
+            <section class="py-5">
+                <div class="container px-5">
+                    <!-- Contact form-->
+                    <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
+                        <div class="text-center mb-5">
+                            <h1 class="fw-bolder"><a href="https://trello.com/c/3g8eBkce/32-rv40-verify-email-view">RV.4.0 Verify email view</a></h1>
+                            <p class="lead fw-normal text-muted mb-0">We have sent you a verification code. Please use it below.</p>
+                        </div>
+                        <div class="row gx-5 justify-content-center">
+                            <div class="col-lg-8 col-xl-6">
+                                <form id="surveyorLoginForm" method="post"  action="/verify-email/">
+                                    {% csrf_token %}
+
+                                    <!-- Email address input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="id_surveyor_email" name="surveyor_email" type="text"
+                                               placeholder="name@example.com" data-sb-validations="required,email" />
+                                        <label for="id_surveyor_email">verification code</label>
+                                        <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
+                                        <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+                                    </div>
+
+                                    <!-- Submit Button-->
+                                    <div class="d-grid"><button class="btn btn-primary btn-lg" id="surveyorLoginSubmitButton" type="submit">Submit</button></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+{% endblock inner_body %}

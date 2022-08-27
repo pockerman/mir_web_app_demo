@@ -39,6 +39,8 @@ template_ids['pricing'] = 'mir_app/pricing.html'
 template_ids['about'] = 'mir_app/about.html'
 template_ids['login'] = 'mir_app/login.html'
 template_ids['signup'] = 'mir_app/signup.html'
+template_ids['verify_email_view'] = 'mir_app/verify_email_view_template.html'
+template_ids['forget_pass_view'] = 'mir_app/forget_pass_view_template.html'
 template_ids['contact'] = 'mir_app/contact.html'
 
 
@@ -93,14 +95,13 @@ def index(request) -> HttpResponse:
 def about(request):
     """Renders the about page
 
-  Parameters
-  ----------
-  request
+      Parameters
+      ----------
+      request
 
-  Returns
-  -------
-
-  """
+      Returns
+      -------
+    """
 
     template = loader.get_template(template_ids['about'])
     context = {}
@@ -110,14 +111,14 @@ def about(request):
 def terms_and_conditions(request) -> HttpResponse:
     """Renders the T&Cs of the mir-app
 
-  Parameters
-  ----------
-  request
+      Parameters
+      ----------
+      request
 
-  Returns
-  -------
+      Returns
+      -------
 
-  """
+    """
     template = loader.get_template(template_ids['terms_and_conditions'])
     context = {}
     return HttpResponse(template.render(context, request))
@@ -150,7 +151,7 @@ def signup(request):
 
     if request.method == 'POST':
 
-        return redirect('/login/')
+        return redirect('/verify-email/')
 
         # does the user exist
     else:
@@ -160,8 +161,26 @@ def signup(request):
         return HttpResponse(template.render(context, request))
 
 
+def verify_email(request):
+
+    if request.method == 'POST':
+        print("This request is post")
+        return redirect('/login/')
+    else:
+
+        template = loader.get_template(template_ids['verify_email_view'])
+        context = {}
+        return HttpResponse(template.render(context, request))
+
+
 def forget_password(request):
-    pass
+
+    if request.method == 'POST':
+        return redirect(to='/login/')
+    else:
+        template = loader.get_template(template_ids['forget_pass_view'])
+        context = {}
+        return HttpResponse(template.render(context, request))
 
 
 def data_privacy_view(request):
