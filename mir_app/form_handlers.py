@@ -78,13 +78,10 @@ def handle_uploaded_img(request, survey_id: str, owner_id: str, vessel_id: str, 
 
 def handle_owner_signup(request):
 
-    print()
-    print()
-    print()
 
     if request.POST.get('owner_name', None) is not None and \
-            request.POST.get('owner_name', None) is not None and \
-            request.POST.get('owner_name', None) is not None and \
+            request.POST.get('owner_surname', None) is not None and \
+            request.POST.get('owner_password', None) is not None and \
             request.POST.get('owner_email', None) is not None:
 
         return {'owner_name': request.POST.get('owner_name'),
@@ -96,4 +93,18 @@ def handle_owner_signup(request):
         #print(form.as_ul())
         raise ValueError("OnwerSignUpForm is invalid")
 
+
+def handle_surveyor_signup(request):
+
+    if request.POST.get('surveyor_name', None) is not None and \
+            request.POST.get('surveyor_surname', None) is not None and \
+            request.POST.get('surveyor_password', None) is not None and \
+            request.POST.get('surveyor_email', None) is not None:
+
+        return {'surveyor_name': request.POST.get('surveyor_name'),
+                'surveyor_surname': request.POST.get('surveyor_surname'),
+                'surveyor_password': request.POST.get('surveyor_password'),
+                'surveyor_email': request.POST.get('surveyor_email')}
+    else:
+        raise ValueError("SurveyorSignUpForm is invalid")
 

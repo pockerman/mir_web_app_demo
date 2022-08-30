@@ -29,6 +29,7 @@ from mir_app.form_handlers import handle_vessel_registration
 from mir_app.form_handlers import handle_generate_survey
 from mir_app.form_handlers import handle_uploaded_img
 from mir_app.form_handlers import handle_owner_signup
+from mir_app.form_handlers import handle_surveyor_signup
 
 
 # Create your views here.
@@ -63,6 +64,9 @@ template_ids['image_preview_view'] = 'mir_app/image_preview_view_template.html'
 template_ids['owner_survey_summary_view'] = 'mir_app/owner/survey_summary_template.html'
 template_ids['survey_part_summary_view'] = 'mir_app/owner/survey_part_summary_template.html'
 template_ids['my_subscription_view'] = 'mir_app/owner/my_subscription_template.html'
+
+# surveyor view
+template_ids['verify_surveyor_email_view'] = 'mir_app/surveyor/verify_surveyor_email_view_template.html'
 
 template_ids['surveyor_profile'] = 'mir_app/surveyor/surveyor_profile.html'
 template_ids['surveyor_survey_view'] = 'mir_app/surveyor/surveyor_survey_view_template.html'
@@ -155,26 +159,51 @@ def signup(request):
 
     if request.method == 'POST':
 
-        #import pdb
-        #pdb.set_trace()
+        try:
+            form_data = handle_owner_signup(request=request)
+        except ValueError:
+            form_data = handle_surveyor_signup(request=request)
 
-        # send the data to the DB
-        url = MIR_APP_REST_API + 'owners/signup'
-        form_data = handle_owner_signup(request=request)
+        if 'owner_name' in form_data:
 
-        owner_email = form_data['owner_email']
-        owner_password = form_data['owner_password']
-        name = form_data['owner_name']
-        surname = form_data['owner_surname']
+            # send the data to the DB
+            url = MIR_APP_REST_API + 'owners/signup'
 
-        post_data = json.dumps({'name': name, 'surname': surname,
-                                'email': owner_email, 'password': owner_password})
+            owner_email = form_data['owner_email']
+            owner_password = form_data['owner_password']
+            name = form_data['owner_name']
+            surname = form_data['owner_surname']
 
-        response = requests.post(url=url, data=post_data)
-        response = response.json()
+            post_data = json.dumps({'name': name, 'surname': surname,
+                                    'email': owner_email, 'password': owner_password})
 
-        idx = response['idx']
-        return redirect(to=f'/owner/{idx}/verify-email/')
+            response = requests.post(url=url, data=post_data)
+            response = response.json()
+
+            idx = response['idx']
+            return redirect(to=f'/owner/{idx}/verify-email/')
+        elif 'surveyor_name' in form_data:
+            # send the data to the DB
+            url = MIR_APP_REST_API + 'surveyors/signup'
+
+            owner_email = form_data['surveyor_email']
+            owner_password = form_data['surveyor_password']
+            name = form_data['surveyor_name']
+            surname = form_data['surveyor_surname']
+
+            post_data = json.dumps({'name': name, 'surname': surname,
+                                    'email': owner_email,
+                                    'password': owner_password,
+                                    'image': 'signature.png',
+                                    'image_encoding': 'latin1'})
+
+            response = requests.post(url=url, data=post_data)
+            response = response.json()
+
+            idx = response['idx']
+            return redirect(to=f'/surveyor/{idx}/verify-email/')
+        else:
+            raise ValueError("Invalid role signup")
 
         # does the user exist
     else:
@@ -184,7 +213,7 @@ def signup(request):
         return HttpResponse(template.render(context, request))
 
 
-def verify_email(request, owner_id):
+def verify_owner_email(request, owner_id):
 
     if request.method == 'POST':
 
@@ -747,7 +776,6 @@ def delete_survey_from_vessel(request, owner_id: str, vessel_id: str, survey_id:
         return HttpResponse(template.render(context, request))
 
 
-
 def survey_part_summary_view(request, survey_id, vessel_part):
     template = loader.get_template(template_ids['survey_part_summary_view'])
     context = {'vessel_part': vessel_part}
@@ -797,6 +825,21 @@ def download_survey(request, owner_id: str, survey_id: str, filename='survey.pdf
         path.close()
         return response
 
+
+def verify_surveyor_email(request, surveyor_id: str):
+
+    if request.method == 'POST':
+
+        url = MIR_APP_REST_API + f'surveyors/signup/{surveyor_id}/confirm'
+        post_data = json.dumps({'verification_code': str(request.POST.get('code'))})
+
+        response = requests.post(url=url, data=post_data)
+        return redirect('/login/')
+    else:
+
+        template = loader.get_template(template_ids['verify_surveyor_email_view'])
+        context = {'surveyor_id': surveyor_id}
+        return HttpResponse(template.render(context, request))
 
 def surveyor_profile(request, surveyor_id: str):
     template = loader.get_template(template_ids['surveyor_profile'])

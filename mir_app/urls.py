@@ -34,7 +34,7 @@ urlpatterns = [
          views.vessel_surveys_in_progress_view, name='vessel-surveys-in-progress'),
     path('owner/<str:owner_id>/vessel-profile/<str:vessel_id>/surveys/<str:survey_id>/delete-survey/',
          views.delete_survey_from_vessel, name='delete-vessel-survey'),
-    path('owner/<str:owner_id>/verify-email/', views.verify_email, name='verify_email'),
+    path('owner/<str:owner_id>/verify-email/', views.verify_owner_email, name='verify-owner-email'),
     path('owner/<str:owner_id>/vessel-registration/', views.vessel_registration, name='vessel_registration'),
     path('owner/<str:owner_id>/vessel/<str:vessel_id>/surveys/', views.generate_survey_view, name='generate-survey'),
     path('owner/<str:owner_id>/vessel/<str:vessel_id>/surveys/condition-survey/<str:survey_id>/',
@@ -63,6 +63,7 @@ urlpatterns = [
          views.download_survey, name='download_survey'),
 
 
+    path('surveyor/<str:surveyor_id>/verify-email/', views.verify_surveyor_email, name='verify-surveyor-email'),
 
 
     path('surveyor_profile/<str:surveyor_id>', views.surveyor_profile, name='surveyor_profile'),
