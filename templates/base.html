@@ -56,10 +56,10 @@
                                {% else %}
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" id="navbarDropdownBlog"
-                                       href="{% url 'owner_profile' owner_id %}" role="button" data-bs-toggle="dropdown" aria-expanded="false">MyProfile</a>
+                                       href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">MyProfile</a>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
-                                        <li><a class="dropdown-item" href="{% url 'owner_profile' owner_id %}">My Dashboard</a></li>
-                                        <li><a class="dropdown-item" href="{% url 'my_settings' %}">My Settings</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'owner-profile' owner_id %}">My Dashboard</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'my_settings_view' owner_id %}">My Settings</a></li>
                                         <li><a class="dropdown-item" href="{% url 'logout' %}">logout</a></li>
                                     </ul>
                                 </li>

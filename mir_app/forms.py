@@ -7,6 +7,13 @@ class OwnerLogin(forms.Form):
     owner_email = forms.EmailField(required=True)
 
 
+class OnwerSignUpForm(forms.Form):
+    owner_password = forms.CharField(required=False, max_length=50)
+    #owner_email = forms.EmailField(required=False)
+    owner_name = forms.CharField(required=False, max_length=50)
+    owner_surname = forms.EmailField(required=False,  max_length=50)
+
+
 class SurveyorLogin(forms.Form):
     surveyor_password = forms.CharField(required=True, max_length=50)
     surveyor_email = forms.EmailField(required=True)

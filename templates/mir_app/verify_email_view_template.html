@@ -14,16 +14,16 @@
                         </div>
                         <div class="row gx-5 justify-content-center">
                             <div class="col-lg-8 col-xl-6">
-                                <form id="surveyorLoginForm" method="post"  action="/verify-email/">
+                                <form id="surveyorLoginForm" method="post"  action="/owner/{{ owner_id }}/verify-email/">
                                     {% csrf_token %}
 
                                     <!-- Email address input-->
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="id_surveyor_email" name="surveyor_email" type="text"
-                                               placeholder="name@example.com" data-sb-validations="required,email" />
-                                        <label for="id_surveyor_email">verification code</label>
-                                        <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
-                                        <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+                                        <input class="form-control" id="id_code" name="code" type="text"
+                                               placeholder="" data-sb-validations="required" />
+                                        <label for="id_code">verification code</label>
+                                        <div class="invalid-feedback" data-sb-feedback="email:required">A code is required.</div>
+                                        <div class="invalid-feedback" data-sb-feedback="email:email">The given code is not valid.</div>
                                     </div>
 
                                     <!-- Submit Button-->

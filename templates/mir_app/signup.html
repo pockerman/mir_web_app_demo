@@ -20,27 +20,31 @@
 
                                     <!-- Email address input-->
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="id_owner_name" name="owner_name" type="text" placeholder="name@example.com" data-sb-validations="required, email" />
+                                        <input class="form-control" id="id_owner_name" name="owner_name" type="text"
+                                               placeholder="" data-sb-validations="required" />
                                         <label for="id_owner_name">your name</label>
-                                        <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
-                                        <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+                                        <div class="invalid-feedback" >A name is required.</div>
+                                        <div class="invalid-feedback" >The name is not valid.</div>
                                     </div>
 
                                      <div class="form-floating mb-3">
-                                        <input class="form-control" id="id_owner_surname" name="owner_surname" type="text" placeholder="name@example.com" data-sb-validations="required, email" />
+                                        <input class="form-control" id="id_owner_surname" name="owner_surname" type="text"
+                                               placeholder="" data-sb-validations="required" />
                                         <label for="id_owner_surname">your surname</label>
-                                        <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
-                                        <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+                                        <div class="invalid-feedback" >A surname is required.</div>
+                                        <div class="invalid-feedback" >The surname is not valid.</div>
                                     </div>
 
 
-                                    <!-- Email address input-->
+                                       <!-- Email address input-->
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="id_owner_email" name="owner_email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
+                                        <input class="form-control" id="id_owner_email" name="owner_email" type="email"
+                                               placeholder="name@example.com" data-sb-validations="required,email" />
                                         <label for="id_owner_email">email address</label>
                                         <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
                                         <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
                                     </div>
+
 
                                     <!-- password input-->
                                     <div class="form-floating mb-3">
@@ -58,9 +62,6 @@
                                         <div class="invalid-feedback" data-sb-feedback="name:required">A valid password is required.</div>
                                     </div>
 
-                                    <!-- This is what your users will see when there is-->
-                                    <!-- an error submitting the form-->
-                                    <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
                                     <!-- Submit Button-->
                                     <div class="d-grid"><button class="btn btn-primary btn-lg" id="ownerLoginSubmitButton" type="submit">Submit</button></div>
                                 </form>

@@ -5,6 +5,7 @@ import json
 from mir_app.forms import VesselRegistration
 from mir_app.forms import GenerateSurveyForm
 from mir_app.forms import UploadImgForm
+from mir_app.forms import OnwerSignUpForm
 
 
 def handle_vessel_registration(request, owner_id):
@@ -73,4 +74,26 @@ def handle_uploaded_img(request, survey_id: str, owner_id: str, vessel_id: str, 
         print(form.errors)
         print(form.as_ul())
         raise ValueError("UploadImgForm is invalid")
+
+
+def handle_owner_signup(request):
+
+    print()
+    print()
+    print()
+
+    if request.POST.get('owner_name', None) is not None and \
+            request.POST.get('owner_name', None) is not None and \
+            request.POST.get('owner_name', None) is not None and \
+            request.POST.get('owner_email', None) is not None:
+
+        return {'owner_name': request.POST.get('owner_name'),
+                'owner_surname': request.POST.get('owner_surname'),
+                'owner_password': request.POST.get('owner_password'),
+                'owner_email': request.POST.get('owner_email')}
+    else:
+        #print(form.errors)
+        #print(form.as_ul())
+        raise ValueError("OnwerSignUpForm is invalid")
+
 

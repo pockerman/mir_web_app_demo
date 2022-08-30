@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}mir-app-{{owner_name}}{% endblock title %}
+
+{%block inner_body %}
+
+            <!-- Page Content-->
+            <section class="py-5">
+                <div class="container px-5">
+                    <h1 class="fw-bolder fs-5 mb-4"><a href="https://trello.com/c/xOt0Su7E/5-rv180-view-vessel-history-records"> Vessel surveys (ex RV.18.0 View vessel history records)</a></h1>
+                    <div class="card border-0 shadow rounded-3 overflow-hidden">
+                        <div class="card-body p-0">
+                            <div class="row gx-0">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="py-5 bg-light">
+                <div class="container px-5">
+                    <div class="row gx-5">
+                        <div class="col-xl-8">
+                            <h2 class="fw-bolder fs-5 mb-4">{{ vessel_name }} in progress surveys</h2>
+
+                            {% if in_progress_surveys %}
+                            <ul>
+                            {% for survey in in_progress_surveys %}
+                                <li>
+                                    <a class="link-dark" href="{{ survey.0 }}">{{vessel_name}}.{{survey.1}}.{{survey.2}}.{{survey.0}} | {{ survey.3 }}</a>
+                                     <a class="btn btn-outline-danger" href="{% url 'delete-vessel-survey' owner_id vessel_id survey.0 %}" role="button">Delete</a>
+                                </li>
+                            {% endfor %}
+                            </ul>
+                            {% else %}
+                                <div class="mb-4">
+                                    <p>You have no surveys in progress for this vessel.</p>
+                                </div>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="py-5 bg-light">
+                <div class="container px-5">
+                    <div class="row gx-5">
+                        <div class="col-xl-8">
+                            <h2 class="fw-bolder fs-5 mb-4">{{ vessel_name }} surveys requests</h2>
+
+                            {% if completed_surveys_reqs %}
+                            <ul>
+                            {% for survey in completed_surveys_reqs %}
+                                <li>
+                                    <a class="link-dark" href="{% url 'view_owner_survey_request_summary' owner_id vessel_id survey.0 %}">{{vessel_name}}.{{survey.1}}.{{survey.2}}.{{survey.0}} | {{ survey.3 }}</a>
+                                </li>
+                            {% endfor %}
+                            </ul>
+                            {% endif %}
+
+                            {% if in_progress_surveys_reqs %}
+                            {% for survey in in_progress_surveys_reqs %}
+                                <div class="mb-4">
+                                    <h3>{{vessel_name}}.{{survey.1}}.{{survey.2}}.{{survey.0}} | {{ survey.3 }}</h3>
+                                </div>
+                            {% endfor %}
+                            {% endif %}
+
+                            {% if pending_surveys_reqs %}
+                            <ul>
+                            {% for survey in pending_surveys_reqs %}
+                                <li>
+                                    {{vessel_name}}.{{survey.1}}.{{survey.2}}.{{survey.0}} | {{ survey.3 }}
+                                    <a class="btn btn-outline-danger" href="{% url 'delete-vessel-survey' owner_id vessel_id survey.0 %}" role="button">Delete</a>
+                                </li>
+                            {% endfor %}
+                            </ul>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+{% endblock inner_body %}
+
+

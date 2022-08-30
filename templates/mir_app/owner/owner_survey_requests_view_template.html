@@ -22,7 +22,10 @@
                         <div class="col-xl-8">
                             <h2 class="fw-bolder fs-5 mb-4">Your surveys in progress</h2>
 
-                             {% if prog_surveys %}
+                             {% if in_progress_surveys %}
+                               {% for survey in in_progress_surveys %}
+                                <li><a href="{{ survey.0 }}">{{ survey.1}}-{{ survey.2 }}-{{ survey.3 }} </a> | {{ survey.4 }}</li>
+                               {% endfor %}
                              {% else %}
                               <h4 class="fw-bolder fs-5 mb-4">You have no surveys in progress</h4>
                              {% endif %}
@@ -32,18 +35,22 @@
                 </div>
             </section>
 
-             <section class="py-5 bg-light">
+                <section class="py-5 bg-light">
                 <div class="container px-5">
                     <div class="row gx-5">
                         <div class="col-xl-8">
                             <h2 class="fw-bolder fs-5 mb-4">Your surveys requests</h2>
 
-                            {% for req_survey in survey_requests %}
-                              {% if req_survey.0 == 'COMPLETED' %}
-                                <li><a href="{% url 'view_owner_survey_request_summary' owner_id req_survey.2 %}">{{ req_survey.1}} </a> | {{ req_survey.0 }}</li>
-                              {% else %}
-                                <li>{{ req_survey.1}} | {{ req_survey.0 }}</li>
-                              {% endif %}
+                            {% for survey in completed_surveys_reqs %}
+                                <li><a href="{% url 'view_owner_survey_request_summary' owner_id vessel_id survey.0 %}">{{ survey.1}}-{{ survey.2 }}-{{ survey.3 }} </a> | {{ survey.4 }}</li>
+                            {% endfor %}
+
+                            {% for survey in in_progress_surveys_reqs %}
+                                <li>{{ survey.1}}-{{ survey.2 }}-{{ survey.3 }} </> | {{ survey.4 }}</li>
+                            {% endfor %}
+
+                            {% for survey in pending_surveys_reqs %}
+                                <li>{{ survey.1}}-{{ survey.2 }}-{{ survey.3 }} </> | {{ survey.4 }}</li>
                             {% endfor %}
 
                         </div>
