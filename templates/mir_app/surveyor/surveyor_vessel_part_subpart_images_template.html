@@ -16,10 +16,9 @@
                         {% for image in images %}
                         <div class="col-lg-6">
                             <div class="position-relative mb-5">
-                                <!--<img class="img-fluid rounded-3 mb-3" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." />-->
-                                <img class="img-fluid rounded-3 mb-3" src="{{ media_url }}/{{ image.0 }}" alt="..." />
+                                <img width="300" height="300" class="img-fluid rounded-3 mb-3" src="{{ media_url }}/{{ image.0 }}" alt="..." />
                                 <a class="h4 fw-bolder text-decoration-none link-dark stretched-link"
-                                   href="{% url 'surveyor_photo_view' surveyor_id survey_id vessel_part vessel_subpart image.1 %}">{{ image.0 }}</a>
+                                   href="{% url 'surveyor-photo-view' surveyor_id survey_id vessel_part vessel_subpart image.1 %}">{{ image.1 }}</a>
                             </div>
                         </div>
                         {% endfor %}
@@ -28,10 +27,56 @@
                     </div>
                 </div>
             </section>
+
+
+
+
             <section class="py-5 bg-light">
-                <div class="container px-5 my-5">
-                    <a class="btn btn-lg btn-primary" href="#">Submit photos</a>
-                    <p>By submitting the photos you agree to T&Cs</p>
-                </div>
+
+                  <div class="row gx-5 justify-content-center">
+                            <div class="col-lg-8 col-xl-6">
+                                <form id="vesselPartPhotoForm" enctype="multipart/form-data" method="post"  action=".">
+
+                                    {% csrf_token %}
+
+                                    <div class="col-lg-6">
+                                        <div class="position-relative mb-5">
+                                            <h3>Your findings & recommendations</h3>
+
+                                        </div>
+                                    </div>
+
+                                    <!-- password input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="id_image_labels" name="image_labels"
+                                               type="text" placeholder="You need to attach at least one label to the image" data-sb-validations="required" />
+                                        <label for="id_image_labels">A comma separated list of labels</label>
+                                    </div>
+
+                                     <!-- Message input-->
+                                    <div class="form-floating mb-3">
+
+                                        <textarea class="form-control" id="id_findings" type="text" placeholder="Enter your message here..."
+                                                  style="height: 10rem" data-sb-validations="required"></textarea>
+                                        <label for="id_findings">Your findings (required)</label>
+                                        <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
+                                    </div>
+
+                                     <div class="form-floating mb-3">
+                                        <textarea class="form-control" id="id_recommendations" type="text" placeholder="Enter your message here..."
+                                                  style="height: 10rem" data-sb-validations="required"></textarea>
+                                        <label for="id_recommendations">Your recommendations (required)</label>
+                                        <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
+                                    </div>
+
+                                    <!-- Submit Button-->
+                                    <div class="d-grid">
+                                        <button class="btn btn-primary btn-lg" id="ownerPhotSubmitButton" type="submit">Submit vessel sub-part review</button>
+                                        <p>By submitting the photos you agree to T&Cs</p>
+                                    </div>
+                                    <br/>
+                                </form>
+                            </div>
+                        </div>
             </section>
 {% endblock inner_body %}

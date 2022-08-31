@@ -24,7 +24,10 @@
 
                              {% if in_progress_surveys %}
                                {% for survey in in_progress_surveys %}
-                                <li><a href="{{ survey.0 }}">{{ survey.1}}-{{ survey.2 }}-{{ survey.3 }} </a> | {{ survey.4 }}</li>
+                                <li>
+                                    <a href="{{ survey.0 }}">{{ survey.1}}.{{ survey.2 }}.{{ survey.3 }}.{{ survey.0 }} </a> | {{ survey.4 }}
+                                    <a class="btn btn-outline-danger" href="{% url 'delete-owner-vessel-survey' owner_id survey.0 %}" role="button">Delete</a>
+                                </li>
                                {% endfor %}
                              {% else %}
                               <h4 class="fw-bolder fs-5 mb-4">You have no surveys in progress</h4>
@@ -46,11 +49,17 @@
                             {% endfor %}
 
                             {% for survey in in_progress_surveys_reqs %}
-                                <li>{{ survey.1}}-{{ survey.2 }}-{{ survey.3 }} </> | {{ survey.4 }}</li>
+                                <li>
+                                    {{ survey.1}}.{{ survey.2 }}.{{ survey.3 }}.{{ survey.0 }}  | {{ survey.4 }}
+                                    <a class="btn btn-outline-danger" href="{% url 'delete-owner-vessel-survey' owner_id survey.0 %}" role="button">Delete</a>
+                                </li>
                             {% endfor %}
 
                             {% for survey in pending_surveys_reqs %}
-                                <li>{{ survey.1}}-{{ survey.2 }}-{{ survey.3 }} </> | {{ survey.4 }}</li>
+                                <li>
+                                    {{ survey.1}}.{{ survey.2 }}.{{ survey.3 }}.{{ survey.0 }}  | {{ survey.4 }}
+                                    <a class="btn btn-outline-danger" href="{% url 'delete-owner-vessel-survey' owner_id survey.0 %}" role="button">Delete</a>
+                                </li>
                             {% endfor %}
 
                         </div>

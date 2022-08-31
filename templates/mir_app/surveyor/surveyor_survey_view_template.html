@@ -71,10 +71,17 @@
                 </div>
             </section>
 
+
            <section class="py-5 bg-light">
                 <div class="container px-5 my-5">
                     <a class="btn btn-lg btn-primary" href="{% url 'surveyor-submit-survey' surveyor_id survey_id %}">Submit survey</a>
                     <p>By submitting the survey you agree to T&Cs</p>
+                </div>
+           </section>
+
+            <section class="py-5 bg-light">
+                <div class="container px-5 my-5">
+                    <a class="btn btn-lg btn-primary" href="{% url 'surveyor-start-survey' surveyor_id survey_id %}">Start survey</a>
                 </div>
            </section>
             <!-- Blog preview section-->
