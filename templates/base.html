@@ -46,10 +46,10 @@
                                {% if user_surveyor_auth %}
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" id="navbarDropdownBlog"
-                                       href="{% url 'surveyor_profile' surveyor_id %}" role="button" data-bs-toggle="dropdown" aria-expanded="false">MyProfile</a>
+                                       href="{% url 'surveyor-profile' surveyor_id %}" role="button" data-bs-toggle="dropdown" aria-expanded="false">MyProfile</a>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
-                                        <li><a class="dropdown-item" href="{% url 'surveyor_profile' surveyor_id %}">My Dashboard</a></li>
-                                        <li><a class="dropdown-item" href="{% url 'my_settings' %}">My Settings</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'surveyor-profile' surveyor_id %}">My Dashboard</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'surveyor-settings' surveyor_id %}">My Settings</a></li>
                                         <li><a class="dropdown-item" href="{% url 'logout' %}">logout</a></li>
                                     </ul>
                                 </li>

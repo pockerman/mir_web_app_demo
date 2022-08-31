@@ -7,16 +7,6 @@
             <section class="py-5" xmlns="http://www.w3.org/1999/html">
                 <div class="container px-5">
                     <h1 class="fw-bolder fs-5 mb-4"><a href="https://trello.com/c/GwB4iyG0/37-rv140-surveyor-survey-view">RV.14.0 Surveyor survey view</a></h1>
-                    <div class="card border-0 shadow rounded-3 overflow-hidden">
-                        <div class="card-body p-0">
-                            <div class="row gx-0">
-                                <!-- <div class="p-4 p-md-5">
-                                <p>Let's check the condition of your vessel {{ owner_name }}. This may take some time
-                                    but you can always save the survey and come back later.</p>
-                                </div>-->
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </section>
 
@@ -83,7 +73,7 @@
 
            <section class="py-5 bg-light">
                 <div class="container px-5 my-5">
-                    <a class="btn btn-lg btn-primary" href="#">Submit survey</a>
+                    <a class="btn btn-lg btn-primary" href="{% url 'surveyor-submit-survey' surveyor_id survey_id %}">Submit survey</a>
                     <p>By submitting the survey you agree to T&Cs</p>
                 </div>
            </section>

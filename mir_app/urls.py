@@ -64,11 +64,12 @@ urlpatterns = [
 
 
     path('surveyor/<str:surveyor_id>/verify-email/', views.verify_surveyor_email, name='verify-surveyor-email'),
-
-
-    path('surveyor_profile/<str:surveyor_id>', views.surveyor_profile, name='surveyor_profile'),
-    path('surveyor_profile/<str:surveyor_id>/surveys/<str:survey_id>',
-         views.surveyor_survey_view, name='surveyor_survey_view'),
+    path('surveyor/<str:surveyor_id>/dashboard/', views.surveyor_profile, name='surveyor-profile'),
+    path('surveyor/<str:surveyor_id>/my-settings/', views.surveyor_settings_view, name='surveyor-settings'),
+    path('surveyor/<str:surveyor_id>/delete-profile/', views.delete_surveyor, name='delete-surveyor'),
+    path('surveyor/<str:surveyor_id>/surveys/<str:survey_id>/', views.surveyor_survey_view, name='surveyor-survey-view'),
+    path('surveyor/<str:surveyor_id>/surveys/<str:survey_id>/submit/',
+         views.submit_survey_surveyor, name='surveyor-submit-survey'),
     path('surveyor_profile/<str:surveyor_id>/surveys/<str:survey_id>/<str:vessel_part>/<str:vessel_subpart>',
          views.surveyor_vessel_part_subpart_images, name='surveyor_vessel_part_subpart_images'),
 

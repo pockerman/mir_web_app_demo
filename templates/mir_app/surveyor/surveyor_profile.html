@@ -25,7 +25,8 @@
 
                             {% for survey_req in survey_reqs %}
                                 <div class="mb-4">
-                                    <a class="link-dark" href="{% url 'surveyor_survey_view' surveyor_id survey_req.1 %}"><h3>{{ survey_req.0 }}</h3></a>
+                                    <a class="link-dark" href="{% url 'surveyor-survey-view' surveyor_id survey_req.3 %}">{{ survey_req.0 }}.{{ survey_req.1 }}.
+                                        {{ survey_req.2}}.{{ survey_req.3}} | {{ survey_req.4}}</a>
                                 </div>
                             {% endfor %}
 

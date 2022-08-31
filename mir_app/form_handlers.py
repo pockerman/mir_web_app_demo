@@ -78,7 +78,6 @@ def handle_uploaded_img(request, survey_id: str, owner_id: str, vessel_id: str, 
 
 def handle_owner_signup(request):
 
-
     if request.POST.get('owner_name', None) is not None and \
             request.POST.get('owner_surname', None) is not None and \
             request.POST.get('owner_password', None) is not None and \

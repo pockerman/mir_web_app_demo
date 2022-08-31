@@ -69,6 +69,7 @@ template_ids['my_subscription_view'] = 'mir_app/owner/my_subscription_template.h
 template_ids['verify_surveyor_email_view'] = 'mir_app/surveyor/verify_surveyor_email_view_template.html'
 
 template_ids['surveyor_profile'] = 'mir_app/surveyor/surveyor_profile.html'
+template_ids['surveyor_settings_view'] = 'mir_app/surveyor/surveyor_settings_view_template.html'
 template_ids['surveyor_survey_view'] = 'mir_app/surveyor/surveyor_survey_view_template.html'
 template_ids['surveyor_vessel_part_subpart_images'] = 'mir_app/surveyor/surveyor_vessel_part_subpart_images_template.html'
 template_ids['surveyor_photo_view_template'] = 'mir_app/surveyor/surveyor_photo_view_template.html'
@@ -194,7 +195,7 @@ def signup(request):
             post_data = json.dumps({'name': name, 'surname': surname,
                                     'email': owner_email,
                                     'password': owner_password,
-                                    'image': 'signature.png',
+                                    'signature_file': 'signature.png',
                                     'image_encoding': 'latin1'})
 
             response = requests.post(url=url, data=post_data)
@@ -317,11 +318,22 @@ def login_owner(request):
 def login_surveyor(request):
 
     if request.method == 'POST':
-        form = OwnerLogin(request.POST)
-        print(form.errors)
-        print(form.as_ul())
-        owner_id = OWNER_ID
-        return redirect(to=f'/surveyor_profile/{owner_id}')
+        form = SurveyorLogin(request.POST)
+
+        if form.is_valid():
+            surveyor_email = form.cleaned_data['surveyor_email']
+            surveyor_password = form.cleaned_data['surveyor_password']
+
+            url = MIR_APP_REST_API + f'surveyors/login'
+            data = {'email': surveyor_email, 'password': surveyor_password}
+            response = requests.post(url=url, data=json.dumps(data))
+
+            response_json = response.json()
+            surveyor_id = response_json['idx']
+
+            return redirect(to=f'/surveyor/{surveyor_id}/dashboard/')
+        else:
+            raise ValueError("Form is not valid")
 
     template = loader.get_template(template_ids['index'])
     context = {}
@@ -447,7 +459,6 @@ def vessel_profile(request, owner_id: str, vessel_id: str):
 
     url = MIR_APP_REST_API + f'vessels/{vessel_id}/?mmsi=false&ce=false'
 
-    print(f"Targeting url {url}")
     # retrieve the vessel data
     response = requests.get(url=url, data=json.dumps({}))
     response_json = response.json()
@@ -841,22 +852,62 @@ def verify_surveyor_email(request, surveyor_id: str):
         context = {'surveyor_id': surveyor_id}
         return HttpResponse(template.render(context, request))
 
+
 def surveyor_profile(request, surveyor_id: str):
     template = loader.get_template(template_ids['surveyor_profile'])
 
     # find the owner via email
-    url = MIR_APP_REST_API + f'owners/{surveyor_id}'
+    url = MIR_APP_REST_API + f'surveyors/{surveyor_id}'
 
     response = requests.get(url=url)
     response_json = response.json()
 
-    surveys = [("AlexBlue-CONDITION_SURVEY-08.2022-123", "123"),
-               ("Rosa Luxemburg-CLASS_SURVEY-07.2021-2545", "2545"),
-               ("David Hilbert-DAMAGE_SURVEY-05.2020-456fg1", "456fg1")]
+    #  from the surveys list query
+    # those that are either pending
+    # or in progress
 
-    context = {'user_auth': True, 'owner_name': response_json['name'],
+    surveys_ids = response_json['surveys']
+
+    in_progress_surveys = []
+    pending_surveys = []
+
+    for survey_id in surveys_ids:
+
+        survey_url = MIR_APP_REST_API + f'surveys/{survey_id}'
+        survey_response = requests.get(url=survey_url)
+
+        survey_response = survey_response.json()
+
+        if survey_response['owner_survey_status'] == 'COMPLETED' and \
+            survey_response['survey_request_status'] == 'PENDING':
+
+            vessel_url = MIR_APP_REST_API + f'vessels/{survey_response["vessel_idx"]}/?mmsi=true&ce=true'
+            vessel_response = requests.get(url=vessel_url)
+
+            vessel_response = vessel_response.json()
+
+            pending_surveys.append((vessel_response['name'],
+                                    survey_response['survey_type'],
+                                    survey_response['created_at'].split(" ")[0],
+                                    survey_response['idx'],
+                                    survey_response['survey_request_status']))
+
+        elif survey_response['owner_survey_status'] == 'COMPLETED' and \
+            survey_response['survey_request_status'] == 'IN_PROGRESS':
+
+            vessel_url = MIR_APP_REST_API + f'vessels/{survey_response["vessel_idx"]}/?mmsi=true&ce=true'
+            vessel_response = requests.get(url=vessel_url)
+
+            in_progress_surveys.append((vessel_response['name'],
+                                        survey_response['survey_type'],
+                                        survey_response['idx'],
+                                        survey_response['survey_request_status']))
+
+    surveys = in_progress_surveys + pending_surveys
+
+    context = {'user_auth': True,
+               'user_surveyor_auth': True, 'surveyor_name': response_json['name'],
                'surveyor_id': surveyor_id,
-               'owner_id': response_json['idx'],
                'survey_reqs': surveys}
 
     return HttpResponse(template.render(context, request))
@@ -864,6 +915,17 @@ def surveyor_profile(request, surveyor_id: str):
 
 def surveyor_survey_view(request, surveyor_id: str, survey_id: str):
     template = loader.get_template(template_ids['surveyor_survey_view'])
+
+    # get the survey results
+
+    survey_url = MIR_APP_REST_API + f'surveys/{survey_id}'
+    survey_response = requests.get(url=survey_url)
+
+    survey_response = survey_response.json()
+
+    survey_name = survey_response['survey_type']
+    request_date = survey_response['created_at'].split(" ")[0]
+    survey_request_state = survey_response['survey_request_status']
 
     url = MIR_APP_REST_API + f'surveys/condition_survey/rib/vessel_parts'
 
@@ -888,9 +950,13 @@ def surveyor_survey_view(request, surveyor_id: str, survey_id: str):
 
         vessel_parts[i] = [item[0], vessel_subparts]
 
-    context = {'user_surveyor_auth': True, 'survey_name': "CONDITION SURVEY",
-               'request_date': '26.08.2022', 'survey_request_state': 'PENDING',
-               'surveyor_id':surveyor_id, 'survey_id': survey_id,
+    context = {'user_auth': True,
+               'user_surveyor_auth': True,
+               'survey_name': survey_name,
+               'request_date': request_date,
+               'survey_request_state': survey_request_state,
+               'surveyor_id': surveyor_id,
+               'survey_id': survey_id,
                'vessel_parts': vessel_parts, 'n_total_photos': 15}
 
     return HttpResponse(template.render(context, request))
@@ -903,7 +969,7 @@ def surveyor_vessel_part_subpart_images(request, surveyor_id: str,
     template = loader.get_template(template_ids['surveyor_vessel_part_subpart_images'])
 
     # collect the images
-    image_path = SURVEYS_PATH / SURVEY_ID / vessel_part / vessel_subpart
+    image_path = SURVEYS_PATH / survey_id / vessel_part / vessel_subpart
     tmp_images = count_number_of_files(filepath=image_path, postfix=['jpg', 'png', 'jpeg'])
 
     images = []
@@ -933,7 +999,8 @@ def surveyor_photo_view(request, surveyor_id: str, survey_id,
 
     img_url_final = survey_id + '/' + vessel_part + '/' + vessel_subpart + '/' + img_url
 
-    context = {'user_surveyor_auth': True, 'surveyor_id': surveyor_id,
+    context = {'user_auth': True,
+               'user_surveyor_auth': True, 'surveyor_id': surveyor_id,
                'survey_id': survey_id, 'vessel_part': vessel_part,
                'vessel_subpart': vessel_subpart,
                'img_url': img_url_final, 'media_url': MEDIA_URL,
@@ -941,6 +1008,43 @@ def surveyor_photo_view(request, surveyor_id: str, survey_id,
                }
 
     return HttpResponse(template.render(context, request))
+
+
+def surveyor_settings_view(request, surveyor_id: str):
+    template = loader.get_template(template_ids['surveyor_settings_view'])
+    context = {'user_auth': True,
+               'user_surveyor_auth': True,
+               'surveyor_id': surveyor_id}
+    return HttpResponse(template.render(context, request))
+
+
+def delete_surveyor(request, surveyor_id: str):
+    """Handles the delete view
+
+       Parameters
+       ----------
+       request
+       surveyor_id: The id of the owner to delete
+
+       Returns
+       -------
+       An instance of HttpResponse
+       """
+
+    # find the owner via email
+    url = MIR_APP_REST_API + f'surveyors/{surveyor_id}'
+    response = requests.delete(url=url)
+    return redirect(to='/login/')
+
+
+def submit_survey_surveyor(request, surveyor_id: str, survey_id: str):
+
+    url = MIR_APP_REST_API + f'surveys/{survey_id}/submit/?surveyor_idx={surveyor_id}'
+    response = requests.patch(url=url)
+    return redirect(to=f'/surveyor/{surveyor_id}/dashboard/')
+
+
+
 
 
 
