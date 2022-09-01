@@ -18,24 +18,46 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('privacy-and-legal/data-privacy/', views.data_privacy_view, name='data_privacy_view'),
 
-    path('owner/<str:owner_id>/dashboard/', views.owner_profile, name='owner-profile'),
-    path('owner/<str:owner_id>/surveys/', views.view_owner_survey_requests, name='owner-survey-requests'),
+    path('owner/<str:owner_id>/dashboard/',
+         views.owner_profile, name='owner-profile'),
+
+    path('owner/<str:owner_id>/surveys/',
+         views.view_owner_survey_requests, name='owner-survey-requests'),
+
     path('owner/<str:owner_id>/buy-subscription/<str:subscription_type>',
-         views.buy_subscription_view, name='buy_subscription_view'),
+         views.buy_subscription_view, name='buy-subscription'),
 
-    path('owner/<str:owner_id>/my-settings/', views.my_settings_view, name='my_settings_view'),
-    path('owner/<str:owner_id>/delete-profile/', views.delete_owner, name='delete_owner'),
-    path('owner/<str:owner_id>/vessel-profile/<str:vessel_id>/', views.vessel_profile, name='vessel_profile'),
+    path('owner/<str:owner_id>/my-settings/',
+         views.my_settings_view, name='my_settings_view'),
 
-    path('owner/<str:owner_id>/vessel-profile/<str:vessel_id>/surveys/<str:survey_id>/summary/', views.view_owner_survey_request_summary, name='view_owner_survey_request_summary'),
+    path('owner/<str:owner_id>/delete-profile/',
+         views.delete_owner, name='delete_owner'),
 
-    path('owner/<str:owner_id>/vessel-profile/<str:vessel_id>/<str:vessel_name>/in-progress-surveys/', views.vessel_surveys_in_progress_view, name='vessel-surveys-in-progress'),
-    path('owner/<str:owner_id>/vessel-profile/<str:vessel_id>/surveys/<str:survey_id>/delete-survey/', views.delete_survey_from_vessel, name='delete-vessel-survey'),
-    path('owner/<str:owner_id>/surveys/<str:survey_id>/delete/', views.delete_owner_vessel_survey, name='delete-owner-vessel-survey'),
-    path('owner/<str:owner_id>/verify-email/', views.verify_owner_email, name='verify-owner-email'),
-    path('owner/<str:owner_id>/vessel-registration/', views.vessel_registration, name='vessel_registration'),
-    path('owner/<str:owner_id>/vessel/<str:vessel_id>/surveys/', views.generate_survey_view, name='generate-survey'),
-    path('owner/<str:owner_id>/vessel/<str:vessel_id>/surveys/condition-survey/<str:survey_id>/', views.generate_condition_survey_view, name='generate-condition-survey'),
+    path('owner/<str:owner_id>/vessel-profile/<str:vessel_id>/',
+         views.vessel_profile, name='vessel_profile'),
+
+    path('owner/<str:owner_id>/vessel-profile/<str:vessel_id>/surveys/<str:survey_id>/summary/',
+         views.view_owner_survey_request_summary, name='view_owner_survey_request_summary'),
+
+    path('owner/<str:owner_id>/vessel-profile/<str:vessel_id>/<str:vessel_name>/in-progress-surveys/',
+         views.vessel_surveys_in_progress_view, name='vessel-surveys-in-progress'),
+
+    path('owner/<str:owner_id>/vessel-profile/<str:vessel_id>/surveys/<str:survey_id>/delete-survey/',
+         views.delete_survey_from_vessel, name='delete-vessel-survey'),
+
+    path('owner/<str:owner_id>/surveys/<str:survey_id>/delete/',
+         views.delete_owner_vessel_survey, name='delete-owner-vessel-survey'),
+
+    path('owner/<str:owner_id>/verify-email/',
+         views.verify_owner_email, name='verify-owner-email'),
+
+    path('owner/<str:owner_id>/vessel-registration/',
+         views.vessel_registration, name='vessel_registration'),
+    path('owner/<str:owner_id>/vessel/<str:vessel_id>/surveys/',
+         views.generate_survey_view, name='generate-survey'),
+
+    path('owner/<str:owner_id>/vessel/<str:vessel_id>/surveys/condition-survey/<str:survey_id>/',
+         views.generate_condition_survey_view, name='generate-condition-survey'),
 
     path('subscription/<str:owner_id>', views.subscription_view, name='subscription_view'),
     path('surveys/condition-survey/<str:survey_id>/<str:owner_id>/<str:vessel_id>/take-photo/<str:vessel_part>/<str:vessel_subpart>',

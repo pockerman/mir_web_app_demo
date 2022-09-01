@@ -10,9 +10,38 @@
                     <div class="text-center mb-5">
                         <h1 class="fw-bolder"><a href="https://trello.com/c/CUQnj3dN/57-rv280-my-subscription-view">RV.28.0 My subscription view</a></h1>
                         <h3 class="fw-bolder">My subscription</h3>
-                        <p class="lead fw-normal text-muted mb-0">find the details of your subscription</p>
+                        <p class="lead fw-normal text-muted mb-0">... find the details of your subscription</p>
                     </div>
 
+                </div>
+            </section>
+
+            <section class="bg-light py-5">
+                <div class="container px-5 my-5">
+                    <ul>
+                        <li>
+                            Subscription type {{ subscription_type }}
+                        </li>
+                        <li>
+                            Number of surveys remaining {{ n_surveys_remaining }}
+                        </li>
+                        <li>
+                            Automatically renew: YES | NO. If YES when the date is due.
+                        </li>
+                        <li>
+                            <a href="#">Cancel automatic renew</a> If  Automatically renew is YES
+                        </li>
+                    </ul>
+                </div>
+
+            </section>
+
+            <section class="bg-light py-5">
+
+                <div class="container px-5 my-5">
+                    <p>Manually renew current subscription</p>
+                    <h4 class="fw-bolder"><a href="{% url 'buy-subscription' owner_id subscription_type %}">Renew my subscription</a></h4>
+                    <h4 class="fw-bolder"><a href="{% url 'pricing' %}">View subscription options</a></h4>
                 </div>
             </section>
 

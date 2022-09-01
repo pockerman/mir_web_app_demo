@@ -409,7 +409,14 @@ def delete_owner(request, owner_id) -> HttpResponse:
 
 def subscription_view(request, owner_id: str):
     template = loader.get_template(template_ids['my_subscription_view'])
-    context = {'user_auth': True, 'owner_id': owner_id}
+
+    url = MIR_APP_REST_API + f'owners/{owner_id}'
+    response = requests.get(url=url)
+    response = response.json()
+
+    context = {'user_auth': True,
+               'owner_id': owner_id,
+               'subscription_type': response['subscription_plan_id']}
     return HttpResponse(template.render(context, request))
 
 

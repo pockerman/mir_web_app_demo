@@ -10,10 +10,73 @@
                     <div class="text-center mb-5">
                         <h1 class="fw-bolder"><a href="#">Buy subscription view</a></h1>
                         <h3 class="fw-bolder">You chose to buy {{ subscription_type }}</h3>
-                        <p class="lead fw-normal text-muted mb-0">find the details of your subscription</p>
+                        <p class="lead fw-normal text-muted mb-0">... purchase subscription
+                            <a href="https://stripe.com/docs/payments/payment-methods">(Stripe API integration)</a></p>
                     </div>
-                  
                 </div>
             </section>
+            <section class="bg-light py-5">
+            <div class="row gx-5 justify-content-center">
+                            <div class="col-lg-8 col-xl-6">
+                                <form id="vesselRegistrationForm" method="post"  action=".">
+                                    {% csrf_token %}
+
+                                    <div class="form-floating mb-3">
+                                        <h3>Billing card details</h3>
+                                    </div>
+
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="id_vessel_name" name="name"  type="text"/>
+                                        <label for="id_vessel_name">name on card (text)</label>
+                                    </div>
+
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="id_number" name="number"  type="text"/>
+                                        <label for="id_number">card number (number)</label>
+                                    </div>
+
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="id_cvs" name="cvs"  type="text"/>
+                                        <label for="id_cvs">cvs (number)</label>
+                                    </div>
+
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="id_expiration_date" name="expiration_date"  type="text"/>
+                                        <label for="id_expiration_date">mm/yyyy</label>
+                                    </div>
+
+                                    <div class="form-floating mb-3">
+                                        <h3>Billing address details</h3>
+                                    </div>
+
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="id_country" name="country"  type="text"/>
+                                         <label for="id_country">country (drop-down list of countries)</label>
+                                    </div>
+
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="id_address_2" name="city"  type="text"/>
+                                         <label for="id_address_1">city (drop down list of cities in country if possible)</label>
+                                     </div>
+
+                                     <div class="form-floating mb-3">
+                                        <input class="form-control" id="id_address_1" name="address_1"  type="text"/>
+                                         <label for="id_address_1">address
+                                             (Allow for automatic address finding by supplying house number + post code)</label>
+                                     </div>
+
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="id_post_code" name="post_code"  type="text"/>
+                                         <label for="id_post_code">post-code</label>
+                                    </div>
+
+                                    <!-- Submit Button-->
+                                    <div class="d-grid">
+                                        <button class="btn btn-primary btn-lg" id="ownerLoginSubmitButton" type="submit">Buy</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+      </section>
 
 {% endblock inner_body %}
