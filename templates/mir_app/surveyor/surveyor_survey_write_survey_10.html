@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block title %}mir-app-condition-survey-view{% endblock title %}
+
+{%block inner_body %}
+
+ <!-- Page Content-->
+            <section class="py-5" xmlns="http://www.w3.org/1999/html">
+                <div class="container px-5">
+                    <h1 class="fw-bolder fs-5 mb-4">
+                        <a href="https://trello.com/c/GwB4iyG0/37-rv140-surveyor-survey-view">Surveyor write survey view</a></h1>
+                </div>
+            </section>
+
+           <section class="py-5 bg-light">
+                <div class="container px-5">
+                    <div class="row gx-5">
+                        <div class="col-xl-8">
+                            <h2 class="fw-bolder fs-5 mb-4">Vessel information</h2>
+                             <ul>
+                            <li>Name: {{name}}</li>
+                            <li>MMSI/CE: {{ mmsi }}</li>
+                            <li>Length: {{ length }}</li>
+                            <li>Beam: {{ beam }}</li>
+                            <li>Propulsion type: {{ propulsion_type }}</li>
+                        </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+<form id="vesselPartPhotoForm"
+      enctype="multipart/form-data"
+      method="post"
+      action=".">
+
+    {% csrf_token %}
+    <section class="py-5 bg-light">
+         <div class="container px-5">
+              <div class="row gx-5">
+                <div class="col-xl-8">
+                    <h2 class="fw-bolder fs-5 mb-4">Operational profile</h2>
+                    <hr/>
+                </div>
+
+                   <div class="form-floating mb-3">
+                       <!--<h4>Vessel type</h4>-->
+                       <select id="id_vessel_type" name="survey_type" class="form-select">
+                             <option value="0">Select</option>
+                             <option value="green">Green</option>
+                             <option value="yellow">Yellow</option>
+                             <option value="red">Red</option>
+                       </select>
+                   </div>
+
+              </div>
+         </div>
+    </section>
+
+    <section class="py-5 bg-light">
+         <div class="container px-5">
+              <div class="row gx-5">
+                <div class="col-xl-8">
+                    <h2 class="fw-bolder fs-5 mb-4">Executive summary</h2>
+                    <hr/>
+                </div>
+
+                  <div class="form-floating mb-3">
+                                        <textarea class="form-control" id="id_recommendations"
+                                                  name="recommendations"
+                                                  type="text" placeholder="Enter your message here..."
+                                                  style="height: 10rem" data-sb-validations="required"></textarea>
+                                        <label for="id_recommendations">This box should show the recommendations of the surveyor
+                                            if these have been filled in (optional)</label>
+
+                                          {% if error_recommendations %}
+                                         <p  style="font-size:14px; color:red; font-weight:bold; font-style:italic;">{{ error_recommendations }}.</p>
+                                        {% endif %}
+
+                                        <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
+                                    </div>
+
+              </div>
+         </div>
+    </section>
+
+            <section class="py-5">
+                <div class="container px-5">
+                    <div class="text-end mb-5 mb-xl-0">
+                        <a class="btn btn-lg btn-outline-dark" href="{% url 'write-survey' surveyor_id survey_id 0 %}">
+                            Save & exit
+                        </a>
+                        <a class="btn btn-lg btn-outline-dark" href="{% url 'write-survey' surveyor_id survey_id 0 %}">
+                            Preview report
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </section>
+</form>
+
+
+
+
+{% endblock inner_body %}

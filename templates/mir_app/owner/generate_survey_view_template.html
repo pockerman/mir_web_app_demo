@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}mir-app-register-vessel{% endblock title %}
+
+{%block inner_body %}
+
+            <!-- Page content-->
+            <section class="py-5">
+                <div class="container px-5">
+                    <!-- Contact form-->
+                    <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
+                        <div class="text-center mb-5">
+
+                            <h1 class="fw-bolder"><a href="https://trello.com/c/dyUO9WfV/6-rv160-generate-survey">RV.16.0 Generate survey</a></h1>
+                            <p class="lead fw-normal text-muted mb-0">Choose a survey to start...</p>
+                        </div>
+                        <div class="row gx-5 justify-content-center">
+                            <div class="col-lg-8 col-xl-6">
+                                <form id="generateSurveyForm" method="post"  action="/owner/{{ owner_id }}/vessel/{{ vessel_id }}/surveys/">
+                                    {% csrf_token %}
+
+                                     <div class="form-floating mb-3">
+                                         <!--<h4>Vessel type</h4>-->
+                                         <select id="id_vessel_type" name="survey_type" class="form-select">
+                                              <option value="0">Select</option>
+                                              {% for survey_type in survey_types %}
+                                                <option value={{ survey_type.idx }}>{{ survey_type.type }}</option>
+                                              {% endfor %}
+                                         </select>
+                                    </div>
+
+                                    <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
+                                    <!-- Submit Button-->
+                                    <div class="d-grid"><button class="btn btn-primary btn-lg" id="ownerLoginSubmitButton" type="submit">Generate survey</button></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+{% endblock inner_body %}

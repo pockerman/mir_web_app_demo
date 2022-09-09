@@ -15,6 +15,8 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
 
+
+
         <title>{% block title %}Default title{% endblock title %}</title>
 </head>
 <body class="d-flex flex-column h-100">
@@ -33,12 +35,21 @@
                             <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact Us</a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'pricing' %}">Pricing</a></li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdownBlog"
+                                   href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Surveys</a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
+                                    <li><a class="dropdown-item" href="#">Conditional survey</a></li>
+                                    <li><a class="dropdown-item" href="#">Damage survey</a></li>
+                                    <li><a class="dropdown-item" href="#">Class survey</a></li>
+                                </ul>
+                            </li>
 
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" id="navbarDropdownBlog"
                                    href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Privacy & legal</a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
-                                    <li><a class="dropdown-item" href="{% url "terms_and_conditions" %}">Terms & Conditions</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'terms_and_conditions' %}">Terms & Conditions</a></li>
                                     <li><a class="dropdown-item" href="{% url 'data_privacy_view' %}">Data privacy</a></li>
                                 </ul>
                             </li>
@@ -46,20 +57,20 @@
                                {% if user_surveyor_auth %}
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" id="navbarDropdownBlog"
-                                       href="{% url 'surveyor_profile' surveyor_id %}" role="button" data-bs-toggle="dropdown" aria-expanded="false">MyProfile</a>
+                                       href="{% url 'surveyor-profile' surveyor_id %}" role="button" data-bs-toggle="dropdown" aria-expanded="false">MyProfile</a>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
-                                        <li><a class="dropdown-item" href="{% url 'surveyor_profile' surveyor_id %}">My Dashboard</a></li>
-                                        <li><a class="dropdown-item" href="{% url 'my_settings' %}">My Settings</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'surveyor-profile' surveyor_id %}">My Dashboard</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'surveyor-settings' surveyor_id %}">My Settings</a></li>
                                         <li><a class="dropdown-item" href="{% url 'logout' %}">logout</a></li>
                                     </ul>
                                 </li>
                                {% else %}
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" id="navbarDropdownBlog"
-                                       href="{% url 'owner_profile' owner_id %}" role="button" data-bs-toggle="dropdown" aria-expanded="false">MyProfile</a>
+                                       href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">MyProfile</a>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
-                                        <li><a class="dropdown-item" href="{% url 'owner_profile' owner_id %}">My Dashboard</a></li>
-                                        <li><a class="dropdown-item" href="{% url 'my_settings' %}">My Settings</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'owner-profile' owner_id %}">My Dashboard</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'my_settings_view' owner_id %}">My Settings</a></li>
                                         <li><a class="dropdown-item" href="{% url 'logout' %}">logout</a></li>
                                     </ul>
                                 </li>
@@ -92,11 +103,17 @@
                 <div class="row align-items-center justify-content-between flex-column flex-sm-row">
                     <div class="col-auto"><div class="small m-0 text-white">Copyright &copy; mir-app 2022</div></div>
                     <div class="col-auto">
-                        <a class="link-light small" href="#!">Privacy</a>
+                        <a class="link-light small" href="#!">About </a>
                         <span class="text-white mx-1">&middot;</span>
-                        <a class="link-light small" href="#!">Terms</a>
+                        <a class="link-light small" href="#!">Contact Us</a>
                         <span class="text-white mx-1">&middot;</span>
-                        <a class="link-light small" href="#!">Contact</a>
+                        <a class="link-light small" href="#!">Pricing</a>
+                        <span class="text-white mx-1">&middot;</span>
+                        <a class="link-light small" href="#!">Terms & conditions</a>
+                        <span class="text-white mx-1">&middot;</span>
+                        <a class="link-light small" href="#!">Data privacy</a>
+                        <span class="text-white mx-1">&middot;</span>
+
                     </div>
                 </div>
             </div>

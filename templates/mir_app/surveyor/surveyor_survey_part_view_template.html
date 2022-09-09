@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}mir-app-condition-survey-view{% endblock title %}
+
+{%block inner_body %}
+
+<section class="py-5" xmlns="http://www.w3.org/1999/html">
+                <div class="container px-5">
+                    <h1 class="fw-bolder fs-5 mb-4">
+                        <a href="https://trello.com/c/NyQfUrdN/7-rv190-generate-condition-vessel-survey">
+                            RV.19.0 Surveyor view: Condition vessel survey part-view</a></h1>
+                    <div class="card border-0 shadow rounded-3 overflow-hidden">
+                        <div class="card-body p-0">
+                            <div class="row gx-0">
+                                <div class="p-4 p-md-5">
+                                <p>You are surveying part {{ vessel_part }} of vessel VESSEL_NAME.</p>
+                                <p>There are in total N parts to survey. For each vessel part
+                                    you need to upload minimum 2 images and maximum of 5 images. </p>
+
+                                <p><a href="#">Review {{ vessel_part }} survey guidelines.</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="py-5 bg-light">
+                <div class="container px-5">
+                    <div class="row gx-5">
+                        <div class="col-xl-8">
+                            <h2 class="fw-bolder fs-5 mb-4">{{ vessel_part }}: Items to survey</h2>
+                            <hr/>
+                            <table class="table table-hover">
+                                <thead>
+                                  <tr>
+                                    <th>Structure</th>
+                                    <th>Completed</th>
+                                    <th>Total number of photos</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                {% for sub_part in parts %}
+                                  <tr>
+                                    <td><a href="{% url 'surveyor-subpart-images-preview' surveyor_id survey_id vessel_part_id sub_part.0 %}"> {{ sub_part.1 }}</a></td>
+                                    <td>{{ sub_part.2 }}</td>
+                                    <td>{{ sub_part.3 }}</td>
+                                  </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="py-5 bg-light">
+
+                 <div class="container px-5 my-5">
+                     <form id="vesselPartGetPreviewForm" method="post"
+                           action=".">
+                         {% csrf_token %}
+                         {% if error_message %}
+                        <p  style="font-size:14px; color:red; font-weight:bold; font-style:italic;">{{ error_message }}.</p>
+                     {% endif %}
+                                      <button class="btn btn-primary btn-lg" id="submitAndContBtn"
+                                              type="submit" name="submitAndContBtn">Submit vessel part survey & continue</button>
+                                      <button class="btn btn-primary btn-lg" id="submitAndSaveBtn"
+                                              type="submit" name="submitAndSaveBtn">Submit vessel part survey & save</button>
+                         <p>By submitting the photos you agree to T&Cs</p>
+                     </form>
+                 </div>
+            </section>
+
+{% endblock inner_body %}

@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% block title %}mir-app-take-photo{% endblock title %}
+
+{%block inner_body %}
+
+
+
+            <!-- Page content-->
+<section class="py-5" xmlns="http://www.w3.org/1999/html">
+                <div class="container px-5">
+                    <!-- Contact form-->
+                    <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
+                        <div class="text-center mb-5">
+                            <!--<div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-envelope"></i></div>-->
+                            <h1 class="fw-bolder"><a href="https://trello.com/c/bWD3bpny/10-rv170-add-vessel-part-photo">RV.17.0 Add vessel part photo</a></a></h1>
+                            <p class="lead fw-normal text-muted mb-0">... not of yourself</p>
+                        </div>
+
+                         <div class="text-center mb-5">
+                            <p class="lead fw-normal text-muted mb-0">You can upload up to 5 images or 500MB for {{ vessel_subpart }}</p>
+                             <p class="lead fw-normal text-muted mb-0">You have uploaded {{ img_counter }}/{{total_img_counter}}</p>
+                        </div>
+
+                        <div class="row gx-5 justify-content-center">
+                            <div class="col-lg-8 col-xl-6">
+                                <form id="vesselPartPhotoForm" enctype="multipart/form-data"
+                                      method="post"
+                                      action="{% url 'take-survey-photo-view' owner_id survey_id  vessel_part survey_part_id %}">
+
+                                    {% csrf_token %}
+
+                                    <!-- Email address input-->
+                                    <div class="form-floating mb-3">
+                                        <div id="img-preview"></div>
+                                        <input type="file" name="image" accept="image/*" id="id_image" capture="user">
+                                        <!--<label for="image">Choose a file</label>-->
+                                    </div>
+
+                                    <!-- password input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="id_image_tags" name="image_tags"
+                                               type="text" placeholder="Enter your password..." data-sb-validations="optional" />
+                                        <label for="id_image_tags">A comma separated list of tags</label>
+                                    </div>
+
+                                    <!-- Camera sensor -->
+                                    <canvas id="camera--sensor"></canvas>
+                                    <!-- Camera view -->
+                                    <video id="camera--view" autoplay playsinline></video>
+                                    <!-- Camera output -->
+                                    <img src="//:0" alt="" id="camera--output">
+
+                                    <!-- Camera trigger -->
+                                    <div class="d-grid">
+                                        <button class="btn btn-primary btn-lg" id="ownerPhotSubmitButton" type="submit">add photo</button>
+                                    </div>
+                                </form>
+
+                                <br/>
+                                <div class="d-grid">
+                                    <form id="vesselPartGetPreviewForm" method="get"
+                                          action="{% url 'vessel-part-subpart-image-preview' owner_id survey_id vessel_part survey_part_id %}">
+                                      <button class="btn btn-primary btn-lg" id="ownerLoginSubmitButton" type="submit">Done</button>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+<script>
+
+const chooseFile = document.getElementById("id_image");
+const imgPreview = document.getElementById("img-preview");
+chooseFile.addEventListener("change", function () {
+  getImgData();
+});
+
+function getImgData() {
+  const files = chooseFile.files[0];
+  if (files) {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(files);
+    fileReader.addEventListener("load", function () {
+      imgPreview.style.display = "block";
+      imgPreview.innerHTML = '<img width="500" height="600" src="' + this.result + '" />';
+    });
+  }
+}
+</script>
+
+<script>
+// Set constraints for the video stream
+var constraints = { video: { facingMode: "user" }, audio: false };
+// Define constants
+const cameraView = document.querySelector("#camera--view"),
+    cameraOutput = document.querySelector("#camera--output"),
+    cameraSensor = document.querySelector("#camera--sensor"),
+    cameraTrigger = document.querySelector("#ownerPhotSubmitButton")
+// Access the device camera and stream to cameraView
+function cameraStart() {
+    navigator.mediaDevices
+        .getUserMedia(constraints)
+        .then(function(stream) {
+        track = stream.getTracks()[0];
+        cameraView.srcObject = stream;
+    })
+    .catch(function(error) {
+        console.error("Oops. Something is broken.", error);
+    });
+}
+// Take a picture when cameraTrigger is tapped
+cameraTrigger.onclick = function() {
+    cameraSensor.width = cameraView.videoWidth;
+    cameraSensor.height = cameraView.videoHeight;
+    cameraSensor.getContext("2d").drawImage(cameraView, 0, 0);
+    cameraOutput.src = cameraSensor.toDataURL("image/webp");
+    cameraOutput.classList.add("taken");
+};
+// Start the video stream when the window loads
+window.addEventListener("load", cameraStart, false);
+
+</script>
+{% endblock inner_body %}

@@ -9,7 +9,9 @@
                     <!-- Contact form-->
                     <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
                         <div class="text-center mb-5">
-                            <h1 class="fw-bolder"><a href="https://trello.com/c/bMfHFlbC/2-rv-21-login-owner-on-mir-app">RV. 2.1 Login owner on mir-app</a></h1>
+                            <h1 class="fw-bolder">
+                                <a href="https://trello.com/c/bMfHFlbC/2-rv-21-login-owner-on-mir-app">RV. 2.1 Login owner on mir-app</a>
+                            </h1>
                             <p class="lead fw-normal text-muted mb-0">As an owner</p>
                         </div>
                         <div class="row gx-5 justify-content-center">
@@ -19,8 +21,15 @@
 
                                     <!-- Email address input-->
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="id_owner_email" name="owner_email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
+                                        <input class="form-control" id="id_owner_email" name="owner_email" type="email"
+                                               placeholder="name@example.com" data-sb-validations="required,email" />
                                         <label for="id_owner_email">email address</label>
+
+
+                                        {% if error_email %}
+                                         <p  style="font-size:14px; color:red; font-weight:bold; font-style:italic;">{{ error_email }}.</p>
+                                        {% endif %}
+
                                         <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
                                         <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
                                     </div>
@@ -31,7 +40,7 @@
                                                type="password" placeholder="Enter your password..." data-sb-validations="required" />
                                         <label for="id_owner_password">password</label>
                                         <div class="invalid-feedback" data-sb-feedback="name:required">A valid password is required.</div>
-                                        <p><a href="{% url 'forget_password' %}">Forgot password?</a></p>
+                                        <p><a href="{% url 'forget-password' %}">Forgot password?</a></p>
                                     </div>
 
                                     <!-- This is what your users will see when there is-->
@@ -86,7 +95,7 @@
                                                type="password" placeholder="Enter your password..." data-sb-validations="required" />
                                         <label for="id_owner_password">password</label>
                                         <div class="invalid-feedback" data-sb-feedback="name:required">A valid password is required.</div>
-                                        <p><a href="{% url 'forget_password' %}">Forgot password?</a></p>
+                                        <p><a href="{% url 'forget-password' %}">Forgot password?</a></p>
                                     </div>
 
 
