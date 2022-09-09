@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block title %}mir-app-{{ name }}{% endblock title %}
-
+{% load static %}
 {%block inner_body %}
 
-            <!-- Page Content-->
+             <!-- Page Content-->
             <section class="py-5">
                 <div class="container px-5 my-5">
                     <div class="text-center mb-5">
@@ -13,7 +13,16 @@
                     </div>
 
                     <div class="row gx-5 bg-light">
+                        <h2 class="fw-bolder">View notes</h2>
+                         <hr/>
+                        <p class="lead fw-normal text-muted mb-0">This is the vessel profile view. Activities on a spcific vessel
+                        are performed here.</p>
+                    </div>
+                    <br/>
+                    <br/>
+                    <div class="row gx-5 bg-light">
                         <h3>Vessel information</h3>
+                        <hr/>
                         <ul>
                             <li>Name: {{name}}</li>
                             <li>MMSI/CE: {{ mmsi }}</li>
@@ -22,16 +31,11 @@
                             <li>Propulsion type: {{ propulsion_type }}</li>
                         </ul>
                     </div>
-                </div>
-            </section>
-
-
-            <!-- Page Content-->
-            <section class="py-5">
-                <div class="container px-5 my-5">
-
-                    <div class="row gx-5 bg-light">
+                     <br/>
+                     <br/>
+                     <div class="row gx-5 bg-light">
                         <h3>Operational profile</h3>
+                        <hr/>
                         {% if conditional_survey %}
                             <p>Show details about the conditional survey</p>
                         {% else %}
@@ -41,8 +45,11 @@
                         {% endif %}
                     </div>
 
-                     <div class="row gx-5 bg-light">
+                    <br/>
+                     <br/>
+                    <div class="row gx-5 bg-light">
                         <h3>Outstanding items</h3>
+                         <hr/>
                          {% if outstanding_items %}
                             <p>Show details about the outstanding items</p>
                         {% else %}
@@ -51,9 +58,9 @@
                                                   id="ownerLoginSubmitButton" type="submit">Generate survey</a>
                         {% endif %}
                     </div>
+
                 </div>
             </section>
-
 
              <!-- Blog preview section-->
             <section class="py-5">
@@ -63,11 +70,12 @@
 
                         <div class="col-lg-4 mb-5">
                             <div class="card h-100 shadow border-0">
-                                <img class="card-img-top" src="https://dummyimage.com/600x350/6c757d/343a40" alt="..." />
+                                <img class="card-img-top"
+                                     src="{% static 'imgs/vessel_report_img.jpg' %}" alt="..." />
                                 <div class="card-body p-4">
                                     <!--<div class="badge bg-primary bg-gradient rounded-pill mb-2">News</div>-->
                                     <a class="text-decoration-none link-dark stretched-link"
-                                       href="{% url 'vessel-surveys-in-progress' owner_id vessel_id vessel_name%}">
+                                       href="{% url 'vessel-surveys-in-progress' owner_id vessel_id %}">
                                         <div class="h5 card-title mb-3">Vessel surveys</div></a>
                                     <!--<p class="card-text mb-0">Some more quick example text to build on the card title
                                     and make up the bulk of the card's content.</p>-->
@@ -75,26 +83,14 @@
                             </div>
                         </div>
 
-                        <!--
                         <div class="col-lg-4 mb-5">
                             <div class="card h-100 shadow border-0">
-                                <img class="card-img-top" src="https://dummyimage.com/600x350/adb5bd/495057" alt="..." />
-                                <div class="card-body p-4">
-                                    <a class="text-decoration-none link-dark stretched-link" href="https://trello.com/c/xOt0Su7E/5-rv180-view-vessel-history-records">
-                                        <div class="h5 card-title mb-3">Vessel history</div>
-                                    </a>
-                                </div>
-
-                            </div>
-                        </div>
-                        -->
-
-                        <div class="col-lg-4 mb-5">
-                            <div class="card h-100 shadow border-0">
-                                <img class="card-img-top" src="https://dummyimage.com/600x350/ced4da/6c757d" alt="..." />
+                                <img class="card-img-top"
+                                     src="{% static 'imgs/generate_survey_img.jpg' %}" alt="..." />
                                 <div class="card-body p-4">
                                     <a class="text-decoration-none link-dark stretched-link"
-                                       href="{% url 'generate-survey' owner_id vessel_id %}"><div class="h5 card-title mb-3">Generate Survey</div></a>
+                                       href="{% url 'generate-survey' owner_id vessel_id %}">
+                                        <div class="h5 card-title mb-3">Generate Survey</div></a>
                                 </div>
 
                             </div>
@@ -104,21 +100,16 @@
 
                         <div class="col-lg-4 mb-5">
                             <div class="card h-100 shadow border-0">
-                                <img class="card-img-top" src="https://dummyimage.com/600x350/6c757d/343a40" alt="..." />
+                                <img class="card-img-top"
+                                     src="{% static 'imgs/settings_1.jpg' %}" alt="..." />
                                 <div class="card-body p-4">
-                                    <!--<div class="badge bg-primary bg-gradient rounded-pill mb-2">News</div>-->
-                                    <a class="text-decoration-none link-dark stretched-link" href="#!"><div class="h5 card-title mb-3">Vessel settings</div></a>
+
+                                    <a class="text-decoration-none link-dark stretched-link" href="#!">
+                                        <div class="h5 card-title mb-3">Vessel settings</div>
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-
-                    <div class="text-end mb-5 mb-xl-0">
-                        <a class="text-decoration-none" href="#!">
-                            More stories
-                            <i class="bi bi-arrow-right"></i>
-                        </a>
                     </div>
                 </div>
             </section>

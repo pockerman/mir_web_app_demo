@@ -1,7 +1,7 @@
 {% extends "base.html" %}
+{% load static %}
+
 {% block title %}mir-app-photo-preview{% endblock title %}
-
-
 {%block inner_body %}
 
             <!-- Page Content-->
@@ -28,21 +28,18 @@
                 </div>
             </section>
 
-
-
-
             <section class="py-5 bg-light">
-
                   <div class="row gx-5 justify-content-center">
                             <div class="col-lg-8 col-xl-6">
-                                <form id="vesselPartPhotoForm" enctype="multipart/form-data" method="post"  action=".">
+                                <form id="vesselPartPhotoForm" enctype="multipart/form-data"
+                                      method="post"  action="{% url 'surveyor-subpart-images-preview' surveyor_id survey_id  vessel_part_id vessel_subpart_id %}">
 
                                     {% csrf_token %}
 
                                     <div class="col-lg-6">
                                         <div class="position-relative mb-5">
                                             <h3>Your findings & recommendations</h3>
-
+                                            <hr/>
                                         </div>
                                     </div>
 
@@ -56,24 +53,39 @@
                                      <!-- Message input-->
                                     <div class="form-floating mb-3">
 
-                                        <textarea class="form-control" id="id_findings" type="text" placeholder="Enter your message here..."
+                                        <textarea class="form-control" id="id_findings"
+                                                  name="findings"
+                                                  type="text" placeholder="Enter your message here..."
+
                                                   style="height: 10rem" data-sb-validations="required"></textarea>
                                         <label for="id_findings">Your findings (required)</label>
+
+                                        {% if error_findings %}
+                                         <p  style="font-size:14px; color:red; font-weight:bold; font-style:italic;">{{ error_findings }}.</p>
+                                        {% endif %}
+
                                         <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
                                     </div>
 
                                      <div class="form-floating mb-3">
-                                        <textarea class="form-control" id="id_recommendations" type="text" placeholder="Enter your message here..."
+                                        <textarea class="form-control" id="id_recommendations"
+                                                  name="recommendations"
+                                                  type="text" placeholder="Enter your message here..."
                                                   style="height: 10rem" data-sb-validations="required"></textarea>
                                         <label for="id_recommendations">Your recommendations (required)</label>
+
+                                          {% if error_recommendations %}
+                                         <p  style="font-size:14px; color:red; font-weight:bold; font-style:italic;">{{ error_recommendations }}.</p>
+                                        {% endif %}
+
                                         <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
                                     </div>
 
                                     <!-- Submit Button-->
-                                    <div class="d-grid">
-                                        <button class="btn btn-primary btn-lg" id="ownerPhotSubmitButton" type="submit">Submit vessel sub-part review</button>
-                                        <p>By submitting the photos you agree to T&Cs</p>
-                                    </div>
+                                    <!--<div class="d-grid">-->
+                                        <button class="btn btn-primary" id="ownerPhotSubmitButton" type="submit">Submit vessel sub-part review</button>
+                                        <p>By submitting the review you agree to T&Cs</p>
+                                    <!--</div>-->
                                     <br/>
                                 </form>
                             </div>

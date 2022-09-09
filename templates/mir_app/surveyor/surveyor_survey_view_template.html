@@ -6,25 +6,8 @@
             <!-- Page Content-->
             <section class="py-5" xmlns="http://www.w3.org/1999/html">
                 <div class="container px-5">
-                    <h1 class="fw-bolder fs-5 mb-4"><a href="https://trello.com/c/GwB4iyG0/37-rv140-surveyor-survey-view">RV.14.0 Surveyor survey view</a></h1>
-                </div>
-            </section>
-
-            <section class="py-5 bg-light">
-                <div class="container px-5">
-                    <div class="row gx-5">
-                        <div class="col-xl-8">
-                            <h2 class="fw-bolder fs-5 mb-4">Vessel information</h2>
-                             <ul>
-                            <li>Name: {{name}}</li>
-                            <li>MMSI/CE: {{ mmsi }}</li>
-                            <li>Length: {{ length }}</li>
-                            <li>Beam: {{ beam }}</li>
-                            <li>Propulsion type: {{ propulsion_type }}</li>
-                        </ul>
-
-                        </div>
-                    </div>
+                    <h1 class="fw-bolder fs-5 mb-4">
+                        <a href="https://trello.com/c/GwB4iyG0/37-rv140-surveyor-survey-view">RV.14.0 Surveyor survey view</a></h1>
                 </div>
             </section>
 
@@ -48,12 +31,35 @@
                 <div class="container px-5">
                     <div class="row gx-5">
                         <div class="col-xl-8">
+                            <h2 class="fw-bolder fs-5 mb-4">Vessel information</h2>
+                             <ul>
+                            <li>Name: {{name}}</li>
+                            <li>MMSI/CE: {{ mmsi }}</li>
+                            <li>Length: {{ length }}</li>
+                            <li>Beam: {{ beam }}</li>
+                            <li>Propulsion type: {{ propulsion_type }}</li>
+                        </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+
+            <!--<section class="py-5 bg-light">
+                <div class="container px-5">
+                    <div class="row gx-5">
+                        <div class="col-xl-8">
                             <h2 class="fw-bolder fs-5 mb-4">Vessel parts to survey</h2>
+                            <hr/>
+
+
+
                             <ul>
                             {% for vessel_part in vessel_parts %}
                               <li>
 
-                                  <a href="#">{{ vessel_part.0 }} (A structure consisting of many parts to survey)</a>
+                                  <a href="{% url 'surveyor-survey-part-view' surveyor_id survey_id vessel_part_id%}">{{ vessel_part.0 }} (A structure consisting of many parts to survey)</a>
 
                                   {% for sub_part in vessel_part.1 %}
                                     <li>
@@ -69,21 +75,22 @@
                         </div>
                     </div>
                 </div>
-            </section>
+            </section>-->
 
 
            <section class="py-5 bg-light">
                 <div class="container px-5 my-5">
+                     <a class="btn btn-lg btn-primary" href="{% url 'surveyor-start-survey' surveyor_id survey_id %}">Start survey</a>
                     <a class="btn btn-lg btn-primary" href="{% url 'surveyor-submit-survey' surveyor_id survey_id %}">Submit survey</a>
                     <p>By submitting the survey you agree to T&Cs</p>
                 </div>
            </section>
 
-            <section class="py-5 bg-light">
+            <!--<section class="py-5 bg-light">
                 <div class="container px-5 my-5">
                     <a class="btn btn-lg btn-primary" href="{% url 'surveyor-start-survey' surveyor_id survey_id %}">Start survey</a>
                 </div>
-           </section>
+           </section>-->
             <!-- Blog preview section-->
 {% endblock inner_body %}
 

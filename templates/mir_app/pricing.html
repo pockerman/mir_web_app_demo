@@ -57,8 +57,13 @@
                                         </li>
                                     </ul>
                                     <div class="d-grid">
+                                        {% if owner_id %}
                                         <a class="btn btn-outline-primary"
-                                           href="{% url 'buy_subscription_view' owner_id Free %}">Choose plan</a>
+                                           href="{% url 'buy-subscription' owner_id Free %}">Choose plan</a>
+                                        {% else %}
+                                         <a class="btn btn-outline-primary"
+                                            href="{% url 'login' %}">Choose plan</a>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -110,8 +115,13 @@
                                         </li>
                                     </ul>
                                     <div class="d-grid">
+                                        {% if owner_id %}
                                         <a class="btn btn-primary"
-                                           href="{% url 'buy_subscription_view' owner_id Pro %}">Choose plan</a>
+                                           href="{% url 'buy-subscription' owner_id Pro %}">Choose plan</a>
+                                        {% else %}
+                                        <a class="btn btn-outline-primary"
+                                            href="{% url 'login' %}">Choose plan</a>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -161,8 +171,15 @@
                                         </li>
                                     </ul>
                                     <div class="d-grid">
+
+                                        {% if owner_id %}
                                         <a class="btn btn-outline-primary"
-                                           href="{% url 'buy_subscription_view' owner_id Enterprise %}">Choose plan</a>
+                                           href="{% url 'buy-subscription' owner_id Enterprise %}">Choose plan</a>
+
+                                         {% else %}
+                                        <a class="btn btn-outline-primary"
+                                            href="{% url 'login' %}">Choose plan</a>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>

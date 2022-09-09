@@ -15,22 +15,27 @@
                     <div class="row gx-5">
                         <div class="col-xl-8">
                             <h2 class="fw-bolder fs-5 mb-4">Vessel parts to survey</h2>
-                            <ul>
-                            {% for vessel_part in vessel_parts %}
-                              <li>
-                                  <a href="#">{{ vessel_part.0 }} (A structure consisting of many parts to survey)</a>
+                            <hr/>
 
-                                  {% for sub_part in vessel_part.1 %}
-                                    <li>
-                                      <a href="{% url 'surveyor-vessel-part-subpart-images' surveyor_id survey_id  vessel_part.0 sub_part.0 %}">
-                                          {{ sub_part.0 }}</a> | {{ sub_part.1 }}
-                                    </li>
-                                  {% endfor %}
+                            <table class="table table-hover">
+                                <thead>
+                                  <tr>
+                                      <th>Structure</th>
+                                      <th>Completed</th>
+                                      <th>Further actions</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
 
-                              </li>
-                            {% endfor %}
-                            </ul>
-
+                                  {% for vessel_part in vessel_parts %}
+                                  <tr>
+                                    <td><a href="{% url 'surveyor-survey-part-view' surveyor_id survey_id vessel_part.0 %}">{{vessel_part.1}}</a></td>
+                                    <td>{{vessel_part.2}}</td>
+                                    <td>No actions</td>
+                                  </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -39,11 +44,14 @@
 
            <section class="py-5 bg-light">
                 <div class="container px-5 my-5">
-                    <a class="btn btn-lg btn-primary" href="{% url 'surveyor-submit-survey' surveyor_id survey_id %}">Submit survey</a>
+
+                    <a class="btn btn-lg btn-outline-dark" href="#">Save survey</a>
+                    <a class="btn btn-lg btn-outline-dark" href="{% url 'write-survey' surveyor_id survey_id 0 %}">Write survey report</a>
+                    <a class="btn btn-lg btn-outline-dark" href="{% url 'surveyor-submit-survey' surveyor_id survey_id %}">Submit survey</a>
                     <p>By submitting the survey you agree to T&Cs</p>
 
                     <div class="container px-5 my-5">
-                    <a class="btn btn-lg btn-primary" href="#">Save survey</a>
+
                 </div>
                 </div>
            </section>

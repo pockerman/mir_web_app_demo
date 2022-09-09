@@ -9,7 +9,8 @@ class OwnerLogin(forms.Form):
 
 class OnwerSignUpForm(forms.Form):
     owner_password = forms.CharField(required=False, max_length=50)
-    #owner_email = forms.EmailField(required=False)
+    owner_password_confirm = forms.CharField(required=False, max_length=50)
+    owner_email = forms.EmailField(required=False)
     owner_name = forms.CharField(required=False, max_length=50)
     owner_surname = forms.EmailField(required=False,  max_length=50)
 

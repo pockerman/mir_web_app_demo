@@ -24,8 +24,9 @@
                         <div class="row gx-5 justify-content-center">
                             <div class="col-lg-8 col-xl-6">
                                 <form id="vesselPartPhotoForm" enctype="multipart/form-data"
-                                      method="post"  action="{% url 'take_survey_photo_view' survey_id owner_id vessel_id vessel_part  vessel_subpart %}">
-                                      <!--action="/surveys/condition-survey/{{ survey_id }}/{{ owner_id }}/{{ vessel_id }}/take-photo/{{ vessel_part }}/{{ vessel_subpart }}/">-->
+                                      method="post"
+                                      action="{% url 'take-survey-photo-view' owner_id survey_id  vessel_part survey_part_id %}">
+
                                     {% csrf_token %}
 
                                     <!-- Email address input-->
@@ -53,16 +54,12 @@
                                     <div class="d-grid">
                                         <button class="btn btn-primary btn-lg" id="ownerPhotSubmitButton" type="submit">add photo</button>
                                     </div>
-
-                                    <!-- Camera trigger -->
-        <!--<button id="camera--trigger">Take a picture</button>-->
-
                                 </form>
 
                                 <br/>
                                 <div class="d-grid">
                                     <form id="vesselPartGetPreviewForm" method="get"
-                                          action="{% url 'vessel_part_subpart_image_preview' survey_id owner_id vessel_id vessel_part vessel_subpart %}">
+                                          action="{% url 'vessel-part-subpart-image-preview' owner_id survey_id vessel_part survey_part_id %}">
                                       <button class="btn btn-primary btn-lg" id="ownerLoginSubmitButton" type="submit">Done</button>
                                     </form>
                                 </div>

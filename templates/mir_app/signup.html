@@ -22,7 +22,13 @@
                                     <div class="form-floating mb-3">
                                         <input class="form-control" id="id_owner_name" name="owner_name" type="text"
                                                placeholder="" data-sb-validations="required" />
-                                        <label for="id_owner_name">your name</label>
+                                        <label for="id_owner_name">Your name</label>
+
+                                        {% if error_name %}
+                                         <p  style="font-size:14px; color:red; font-weight:bold; font-style:italic;">{{ error_name }}.</p>
+                                        {% endif %}
+
+
                                         <div class="invalid-feedback" >A name is required.</div>
                                         <div class="invalid-feedback" >The name is not valid.</div>
                                     </div>
@@ -30,7 +36,12 @@
                                      <div class="form-floating mb-3">
                                         <input class="form-control" id="id_owner_surname" name="owner_surname" type="text"
                                                placeholder="" data-sb-validations="required" />
-                                        <label for="id_owner_surname">your surname</label>
+                                        <label for="id_owner_surname">Your surname</label>
+
+                                          {% if error_surname %}
+                                            <p  style="font-size:14px; color:red; font-weight:bold; font-style:italic;">{{ error_surname }}.</p>
+                                          {% endif %}
+
                                         <div class="invalid-feedback" >A surname is required.</div>
                                         <div class="invalid-feedback" >The surname is not valid.</div>
                                     </div>
@@ -41,7 +52,12 @@
                                         <input class="form-control" id="id_owner_email" name="owner_email" type="email"
                                                placeholder="name@example.com" data-sb-validations="required,email" />
                                         <label for="id_owner_email">email address</label>
-                                        <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
+
+                                        {% if error_email %}
+                                         <p  style="font-size:14px; color:red; font-weight:bold; font-style:italic;">{{ error_email }}.</p>
+                                        {% endif %}
+
+                                        <div class="invalid-feedback" data-sb-feedback="email:required"></div>
                                         <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
                                     </div>
 
@@ -51,6 +67,11 @@
                                         <input class="form-control" id="id_owner_password" name="owner_password"
                                                type="password" placeholder="Enter your password..." data-sb-validations="required" />
                                         <label for="id_owner_password">password</label>
+
+                                        {% if password_not_valid_characters %}
+                                         <p  style="font-size:14px; color:red; font-weight:bold; font-style:italic;">{{ password_not_valid_characters }}.</p>
+                                        {% endif %}
+
                                         <div class="invalid-feedback" data-sb-feedback="name:required">A valid password is required.</div>
                                     </div>
 
@@ -59,6 +80,11 @@
                                         <input class="form-control" id="id_owner_password_confirm" name="owner_password_confirm"
                                                type="password" placeholder="Enter your password..." data-sb-validations="required" />
                                         <label for="id_owner_password_confirm">confirm password</label>
+
+                                         {% if confirm_password_error %}
+                                         <p  style="font-size:14px; color:red; font-weight:bold; font-style:italic;">{{ confirm_password_error }}.</p>
+                                        {% endif %}
+
                                         <div class="invalid-feedback" data-sb-feedback="name:required">A valid password is required.</div>
                                     </div>
 
@@ -110,8 +136,15 @@
                                         <input class="form-control" id="id_surveyor_email" name="surveyor_email" type="email"
                                                placeholder="name@example.com" data-sb-validations="required,email" />
                                         <label for="id_owner_email">email address</label>
+
+
                                         <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
-                                        <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+
+                                        {% if error_email %}
+                                            <div class="invalid-feedback" data-sb-feedback="email:email">
+                                                <p>{{ error_email }}.</p>
+                                            </div>
+                                        {% endif %}
                                     </div>
 
 
