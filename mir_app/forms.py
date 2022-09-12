@@ -26,6 +26,7 @@ class VesselRegistration(forms.Form):
     mmsi_id = forms.CharField(required=False, max_length=50)
     ce_id = forms.CharField(required=False, max_length=50)
     vessel_type = forms.CharField(required=True, max_length=50)
+    construction_material_type = forms.CharField(required=True, max_length=50)
 
 
 class GenerateSurveyForm(forms.Form):

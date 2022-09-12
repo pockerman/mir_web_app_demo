@@ -78,12 +78,33 @@
                                 </li>
                             {% endfor %}
 
+                            <table class="table table-hover">
+                                <thead>
+                                  <tr>
+                                      <th>Vessel name</th>
+                                      <th>Survey type</th>
+                                       <th>Date started</th>
+                                       <th>Survey ID</th>
+                                       <th>Survey status</th>
+                                      <th>Further actions</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+
                             {% for survey in pending_surveys_reqs %}
-                                <li>
-                                    {{ survey.1}}.{{ survey.2 }}.{{ survey.3 }}.{{ survey.0 }}  | {{ survey.4 }}
-                                    <a class="btn btn-outline-danger" href="{% url 'delete-owner-vessel-survey' owner_id survey.0 %}" role="button">Delete</a>
-                                </li>
+
+                                            <tr>
+                                                <td>{{ survey.1 }}</td>
+                                                <td>{{ survey.2 }}</td>
+                                                <td>{{ survey.3 }}</td>
+                                                <td>{{ survey.0 }}</td>
+                                                <td>{{ survey.4 }}</td>
+                                                <td><a class="btn btn-outline-danger" 
+                                                    href="{% url 'delete-vessel-survey' owner_id vessel_id survey.0 %}" role="button">Delete</a></td>
+                                              </tr>
                             {% endfor %}
+                        </tbody>
+                                </table>
 
                         </div>
                     </div>

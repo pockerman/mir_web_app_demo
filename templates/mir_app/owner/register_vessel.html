@@ -39,24 +39,39 @@
                                          <label for="id_ce_id">ce id</label>
                                     </div>
 
-                                    <!-- password input-->
-                                    <!--<div class="form-floating mb-3">
-                                        <input class="form-control" id="id_owner_password" name="owner_password"
-                                               type="password" placeholder="Enter your password..." data-sb-validations="required" />
-                                        <label for="id_owner_password">password</label>
-                                        <div class="invalid-feedback" data-sb-feedback="name:required">A valid password is required.</div>
-                                    </div>-->
-
                                      <div class="form-floating mb-3">
                                          <!--<label for="id_vessel_type" class="form-label">Vessel type</label>-->
                                          <h4>Vessel type</h4>
                                          <select id="id_vessel_type" name="vessel_type" class="form-select">
                                               <option value="0">Select</option>
                                               {% for vessel_type in vessel_types %}
-                                                <option value={{ vessel_type.idx }}>{{ vessel_type.type }}</option>
+                                                <option value={{ vessel_type.type }}>{{ vessel_type.type }}</option>
                                               {% endfor %}
                                          </select>
                                     </div>
+
+                                     <div class="form-floating mb-3">
+                                         <!--<label for="id_vessel_type" class="form-label">Vessel type</label>-->
+                                         <h4>Propulsion type</h4>
+                                         <select id="id_propulsion_type" name="propulsion_type" class="form-select">
+                                              <option value="0">Select</option>
+                                              {% for propulsion_type in propulsion_types %}
+                                                <option value={{ propulsion_type }}>{{ propulsion_type }}</option>
+                                              {% endfor %}
+                                         </select>
+                                    </div>
+
+                                     <div class="form-floating mb-3">
+                                         <!--<label for="id_vessel_type" class="form-label">Vessel type</label>-->
+                                         <h4>Hull constructon material type</h4>
+                                         <select id="id_construction_material_type" name="construction_material_type" class="form-select">
+                                              <option value="0">Select</option>
+                                              {% for construction_type in construction_types %}
+                                                <option value={{ construction_type }}>{{ construction_type }}</option>
+                                              {% endfor %}
+                                         </select>
+                                    </div>
+
 
 
 

@@ -108,22 +108,59 @@
                                 {% endif %}
 
                                 {% if in_progress_surveys_reqs %}
-                                {% for survey in in_progress_surveys_reqs %}
-                                    <div class="mb-4">
-                                        <h3>{{vessel_name}}.{{survey.1}}.{{survey.2}}.{{survey.0}} | {{ survey.3 }}</h3>
-                                    </div>
-                                {% endfor %}
+
+                                    <table class="table table-hover">
+                                        <thead>
+                                          <tr>
+                                              <th>Vessel name</th>
+                                              <th>Survey type</th>
+                                               <th>Date started</th>
+                                               <th>Survey ID</th>
+                                              <th>Further actions</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            {% for survey in in_progress_surveys_reqs %}
+                                              <tr>
+                                                <td>{{vessel_name}}</td>
+                                                <td>{{survey.1}}</td>
+                                                <td>{{survey.2}}</td>
+                                                  <td>{{ survey.0 }}</td>
+                                                  <td><a class="btn btn-outline-danger" href="{% url 'delete-vessel-survey' owner_id vessel_id survey.0 %}" role="button">Delete</a></td>
+                                              </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                </table>
+
                                 {% endif %}
 
                                 {% if pending_surveys_reqs %}
-                                <ul>
-                                {% for survey in pending_surveys_reqs %}
-                                    <li>
-                                        {{vessel_name}}.{{survey.1}}.{{survey.2}}.{{survey.0}} | {{ survey.3 }}
-                                        <a class="btn btn-outline-danger" href="{% url 'delete-vessel-survey' owner_id vessel_id survey.0 %}" role="button">Delete</a>
-                                    </li>
+
+
+                                <table class="table table-hover">
+                                <thead>
+                                  <tr>
+                                      <th>Vessel name</th>
+                                      <th>Survey type</th>
+                                       <th>Date started</th>
+                                       <th>Survey ID</th>
+                                      <th>Further actions</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+
+                                   {% for survey in pending_surveys_reqs %}
+                                  <tr>
+                                    <td>{{vessel_name}}</td>
+                                    <td>{{survey.1}}</td>
+                                    <td>{{survey.2}}</td>
+                                      <td>{{ survey.0 }}</td>
+                                      <td><a class="btn btn-outline-danger" href="{% url 'delete-vessel-survey' owner_id vessel_id survey.0 %}" role="button">Delete</a></td>
+                                  </tr>
                                 {% endfor %}
-                                </ul>
+                                </tbody>
+                            </table>
                                 {% endif %}
                             {% endif %}
 
