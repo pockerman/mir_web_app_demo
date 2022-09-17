@@ -76,8 +76,6 @@ def handle_uploaded_img(request, survey_id: str, owner_id: str, vessel_id: str, 
     if form.is_valid():
         return form.cleaned_data
     else:
-        print(form.errors)
-        print(form.as_ul())
         raise ValueError("UploadImgForm is invalid")
 
 

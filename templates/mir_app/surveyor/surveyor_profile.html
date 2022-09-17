@@ -27,44 +27,35 @@
                             <h2 class="fw-bolder fs-5 mb-4">Your survey requests</h2>
                             <hr/>
 
+                            <table class="table table-hover">
+                                <thead>
+                                  <tr>
+                                      <th>Vessel name</th>
+                                      <th>Survey type</th>
+                                       <th>Date started</th>
+                                       <th>Survey ID</th>
+                                      <th>Survey status</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+
                             {% for survey_req in survey_reqs %}
-                                <div class="mb-4">
-                                    <a class="link-dark"
-                                       href="{% url 'surveyor-survey-view' surveyor_id survey_req.3 %}">{{ survey_req.0 }}.{{ survey_req.1 }}.
-                                        {{ survey_req.2}}.{{ survey_req.3}} | {{ survey_req.4}}</a>
-                                </div>
+                                <tr>
+                                    <td><a href="{% url 'surveyor-survey-view' surveyor_id survey_req.3 %}">{{survey_req.0}}</a></td>
+                                    <td>{{survey_req.1}}</td>
+                                    <td>{{survey_req.2}}</td>
+                                      <td>{{ survey_req.3 }}</td>
+                                      <td>{{ survey_req.4}}</td>
+                                  </tr>
                             {% endfor %}
+                                    </tbody>
+                            </table>
 
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Blog preview section-->
-            <section class="py-5">
-                <div class="container px-5">
-                        <div class="col-lg-4 mb-5">
-                            <div class="card h-100 shadow border-0">
-                                <img class="card-img-top" src="https://dummyimage.com/600x350/6c757d/343a40" alt="..." />
-                                <div class="card-body p-4">
-                                    <!--<div class="badge bg-primary bg-gradient rounded-pill mb-2">News</div>-->
-                                    <a class="text-decoration-none link-dark stretched-link"
-                                       href="#">
-                                        <div class="h5 card-title mb-3">My subscription</div>
-                                    </a>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <!--<div class="text-end mb-5 mb-xl-0">
-                        <a class="text-decoration-none" href="#!">
-                            More stories
-                            <i class="bi bi-arrow-right"></i>
-                        </a>
-                    </div>-->
-                </div>
-            </section>
 {% endblock inner_body %}
 
 

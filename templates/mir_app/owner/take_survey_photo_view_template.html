@@ -6,7 +6,7 @@
 
 
             <!-- Page content-->
-<section class="py-5" xmlns="http://www.w3.org/1999/html">
+            <section class="py-5" xmlns="http://www.w3.org/1999/html">
                 <div class="container px-5">
                     <!-- Contact form-->
                     <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
@@ -36,7 +36,6 @@
                                         <!--<label for="image">Choose a file</label>-->
                                     </div>
 
-                                    <!-- password input-->
                                     <div class="form-floating mb-3">
                                         <input class="form-control" id="id_image_tags" name="image_tags"
                                                type="text" placeholder="Enter your password..." data-sb-validations="optional" />
@@ -51,7 +50,11 @@
                                     <img src="//:0" alt="" id="camera--output">
 
                                     <!-- Camera trigger -->
+
                                     <div class="d-grid">
+                                        {% if error_form %}
+                                        <p  style="font-size:14px; color:red; font-weight:bold; font-style:italic;">{{ error_form }}.</p>
+                                        {% endif %}
                                         <button class="btn btn-primary btn-lg" id="ownerPhotSubmitButton" type="submit">add photo</button>
                                     </div>
                                 </form>
@@ -67,7 +70,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </section>
 

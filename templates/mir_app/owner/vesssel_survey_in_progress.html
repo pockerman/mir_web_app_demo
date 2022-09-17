@@ -24,12 +24,11 @@
                             class="btn btn-outline-primary" id="ownerLoginSubmitButton" type="submit">Vessel profile</a>
 
                         <hr/>
-                        <div class="col-xl-8">
+                        <div class="col-xl-10">
                             <h2 class="fw-bolder fs-5 mb-4">{{ vessel_name }} in progress surveys</h2>
                             <hr/>
 
                             {% if in_progress_surveys %}
-
 
                              <table class="table table-hover">
                                 <thead>
@@ -38,6 +37,7 @@
                                       <th>Survey type</th>
                                        <th>Date started</th>
                                        <th>Survey ID</th>
+                                       <th>Survey status</th>
                                       <th>Further actions</th>
                                   </tr>
                                 </thead>
@@ -45,10 +45,11 @@
 
                                   {% for survey in in_progress_surveys %}
                                   <tr>
-                                    <td><a href="{% url 'generate-condition-survey' owner_id vessel_id survey.0  %}">{{vessel_name}}</a></td>
-                                    <td>{{survey.1}}</td>
-                                    <td>{{survey.2}}</td>
+                                      <td><a href="{% url 'generate-condition-survey' owner_id vessel_id survey.0  %}">{{vessel_name}}</a></td>
+                                      <td>{{survey.1}}</td>
+                                      <td>{{survey.2}}</td>
                                       <td>{{ survey.0 }}</td>
+                                      <td>{{ survey.3 }}</td>
                                       <td><a class="btn btn-outline-danger"
                                              href="{% url 'delete-vessel-survey' owner_id vessel_id survey.0 %}" role="button">Delete</a></td>
                                   </tr>
@@ -69,7 +70,7 @@
             <section class="py-5 bg-light">
                 <div class="container px-5">
                     <div class="row gx-5">
-                        <div class="col-xl-8">
+                        <div class="col-xl-10">
                             <h2 class="fw-bolder fs-5 mb-4">{{ vessel_name }} surveys requests</h2>
                             <hr/>
 
@@ -79,91 +80,66 @@
                                 </div>
                             {% else %}
 
-                                {% if completed_surveys_reqs %}
-
                                      <table class="table table-hover">
-                                <thead>
-                                  <tr>
-                                      <th>Vessel name</th>
-                                      <th>Survey type</th>
-                                       <th>Date started</th>
-                                       <th>Survey ID</th>
-                                      <th>Further actions</th>
-                                  </tr>
-                                </thead>
+                                    <thead>
+                                      <tr>
+                                          <th>Vessel name</th>
+                                          <th>Survey type</th>
+                                          <th>Date started</th>
+                                          <th>Survey ID</th>
+                                          <th>Survey status</th>
+                                          <th>Further actions</th>
+                                      </tr>
+                                    </thead>
                                 <tbody>
 
-                                   {% for survey in completed_surveys_reqs %}
+                                {% for survey in completed_surveys_reqs %}
                                   <tr>
-                                    <td><a href="{% url 'view_owner_survey_request_summary' owner_id vessel_id survey.0 %}">{{vessel_name}}</a></td>
-                                    <td>{{survey.1}}</td>
-                                    <td>{{survey.2}}</td>
+                                      <td><a href="{% url 'view_owner_survey_request_summary' owner_id vessel_id survey.0 %}">{{vessel_name}}</a></td>
+                                      <td>{{survey.1}}</td>
+                                      <td>{{survey.2}}</td>
                                       <td>{{ survey.0 }}</td>
-                                      <td><a class="btn btn-outline-primary"
-                                             href="#" role="button">Download survey report</a></td>
+                                      <td>{{ survey.3 }}</td>
+                                      <td><a class="btn btn-outline-primary" 
+                                                    href="{% url 'download_survey' owner_id survey.0 %}" role="button">Download</a></td>
                                   </tr>
                                 {% endfor %}
-                                </tbody>
-                            </table>
-                                {% endif %}
 
-                                {% if in_progress_surveys_reqs %}
-
-                                    <table class="table table-hover">
-                                        <thead>
-                                          <tr>
-                                              <th>Vessel name</th>
-                                              <th>Survey type</th>
-                                               <th>Date started</th>
-                                               <th>Survey ID</th>
-                                              <th>Further actions</th>
-                                          </tr>
-                                        </thead>
-                                        <tbody>
-
-                                            {% for survey in in_progress_surveys_reqs %}
+                                 {% for survey in in_progress_surveys_reqs %}
                                               <tr>
-                                                <td>{{vessel_name}}</td>
-                                                <td>{{survey.1}}</td>
-                                                <td>{{survey.2}}</td>
+                                                  <td>{{vessel_name}}</td>
+                                                  <td>{{survey.1}}</td>
+                                                  <td>{{survey.2}}</td>
                                                   <td>{{ survey.0 }}</td>
+                                                  <td>{{ survey.3 }}</td>
                                                   <td><a class="btn btn-outline-danger" href="{% url 'delete-vessel-survey' owner_id vessel_id survey.0 %}" role="button">Delete</a></td>
                                               </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                </table>
-
-                                {% endif %}
-
-                                {% if pending_surveys_reqs %}
-
-
-                                <table class="table table-hover">
-                                <thead>
-                                  <tr>
-                                      <th>Vessel name</th>
-                                      <th>Survey type</th>
-                                       <th>Date started</th>
-                                       <th>Survey ID</th>
-                                      <th>Further actions</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-
+                                  {% endfor %}
                                    {% for survey in pending_surveys_reqs %}
-                                  <tr>
-                                    <td>{{vessel_name}}</td>
-                                    <td>{{survey.1}}</td>
-                                    <td>{{survey.2}}</td>
-                                      <td>{{ survey.0 }}</td>
-                                      <td><a class="btn btn-outline-danger" href="{% url 'delete-vessel-survey' owner_id vessel_id survey.0 %}" role="button">Delete</a></td>
-                                  </tr>
-                                {% endfor %}
+                                      <tr>
+                                          <td>{{vessel_name}}</td>
+                                          <td>{{survey.1}}</td>
+                                          <td>{{survey.2}}</td>
+                                          <td>{{ survey.0 }}</td>
+                                          <td>{{ survey.3 }}</td>
+                                          <td><a class="btn btn-outline-danger"
+                                                 href="{% url 'delete-vessel-survey' owner_id vessel_id survey.0 %}" role="button">Delete</a></td>
+                                      </tr>
+                                    {% endfor %}
+
+                                    {% for survey in in_progress_surveyor %}
+                                              <tr>
+                                                  <td>{{vessel_name}}</td>
+                                                  <td>{{survey.1}}</td>
+                                                  <td>{{survey.2}}</td>
+                                                  <td>{{ survey.0 }}</td>
+                                                  <td>{{ survey.3 }}</td>
+                                                  <td><a class="btn btn-outline-danger" href="{% url 'delete-vessel-survey' owner_id vessel_id survey.0 %}" role="button">Delete</a></td>
+                                              </tr>
+                                    {% endfor %}
                                 </tbody>
                             </table>
-                                {% endif %}
                             {% endif %}
-
                         </div>
                     </div>
                 </div>

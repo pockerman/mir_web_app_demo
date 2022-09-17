@@ -267,8 +267,6 @@ class OwnerViewsHandler(object):
             survey_result_doc = requests.get(url=survey_result_doc)
             survey_result_response_json = survey_result_doc.json()
 
-            print(survey_response_json)
-
             if survey_result_response_json['owner_survey_status'] == "IN_PROGRESS":
                 in_progress_surveys.append((survey, vessel_response_json['name'],
                                             survey_type,
@@ -283,7 +281,7 @@ class OwnerViewsHandler(object):
                 in_progress_surveys_req.append((survey, vessel_response_json['name'],
                                                 survey_type,
                                                 survey_response_json['created_at'].split(" ")[0],
-                                                "IN_PROGRESS"))
+                                                "SURVEYOR_IN_PROGRESS"))
             elif survey_result_response_json['survey_request_status'] == "COMPLETED":
                 completed_surveys_reqs.append((survey, vessel_response_json['name'],
                                                survey_type,
