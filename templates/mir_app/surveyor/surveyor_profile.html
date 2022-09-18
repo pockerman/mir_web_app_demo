@@ -23,7 +23,7 @@
                             <h2 class="fw-bolder fs-5 mb-4">Hello {{surveyor_name}}</h2>
                         </div>
 
-                        <div class="col-xl-8">
+                        <div class="col-xl-12">
                             <h2 class="fw-bolder fs-5 mb-4">Your survey requests</h2>
                             <hr/>
 
@@ -32,9 +32,12 @@
                                   <tr>
                                       <th>Vessel name</th>
                                       <th>Survey type</th>
+                                      <th>Date requested</th>
                                        <th>Date started</th>
+                                      <th>Remaining days for submission</th>
                                        <th>Survey ID</th>
                                       <th>Survey status</th>
+                                      <th>Further actions</th>
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -44,8 +47,11 @@
                                     <td><a href="{% url 'surveyor-survey-view' surveyor_id survey_req.3 %}">{{survey_req.0}}</a></td>
                                     <td>{{survey_req.1}}</td>
                                     <td>{{survey_req.2}}</td>
-                                      <td>{{ survey_req.3 }}</td>
-                                      <td>{{ survey_req.4}}</td>
+                                    <td>-</td>
+                                    <td>10</td>
+                                    <td>{{ survey_req.3 }}</td>
+                                    <td>{{ survey_req.4}}</td>
+                                    <td><button class="btn btn-outline-danger">Reject survey</button> </td>
                                   </tr>
                             {% endfor %}
                                     </tbody>

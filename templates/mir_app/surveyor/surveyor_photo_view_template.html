@@ -14,11 +14,12 @@
                             <h1 class="fw-bolder">
                                 <a href="https://trello.com/c/O84M3cNn/64-rv33-view-vessel-part-subpart-photo">RV.33. View vessel-part subpart photo</a>
                             </h1>
-                            <p class="lead fw-normal text-muted mb-0">... not of yourself</p>
+                            <!--<p class="lead fw-normal text-muted mb-0">... not of yourself</p>-->
                         </div>
 
                          <div class="text-center mb-5">
-                             <p class="lead fw-normal text-muted mb-0">Label the image and act...</p>
+                             <p class="lead fw-normal text-muted mb-0">Image 1/5</p>
+                             <p class="lead fw-normal text-muted mb-0">Please provide a label for the image</p>
                         </div>
 
                         <div class="row gx-5 justify-content-center">
@@ -37,11 +38,6 @@
                                         </div>
                                     </div>
 
-                                    <!--<div class="autocomplete" style="width:300px;">
-                                        <input id="myInput" type="text" name="myCountry" placeholder="Country" multiple>
-                                    </div>-->
-
-                                    <!-- password input-->
                                     <div class="autocomplete form-floating mb-3">
                                         <input class="form-control" id="myInput" name="image_labels"
                                                type="text"
@@ -50,10 +46,50 @@
                                         <label for="myInput">A comma separated list of labels (required)</label>
                                     </div>
 
-                                    <script>
+
+                                    <!-- Message input-->
+                                    <div class="form-floating mb-3">
+                                        <textarea class="form-control" id="message" type="text"
+                                                  placeholder="Enter your message here..." style="height: 10rem" data-sb-validations="required">
+
+                                        </textarea>
+                                        <label for="message">if other has been selected please specify</label>
+                                        <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
+                                    </div>
+
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control form-check-input" id="id_use_report_img" name="image_labels"
+                                               type="checkbox" placeholder="" data-sb-validations="optional"/>
+                                        <label for="id_use_report_img" class="form-check-label">Include image in final report</label>
+                                    </div>
+
+                                    <!-- Submit Button-->
+                                    <div class="d-grid">
+                                        <button class="btn btn-outline-dark btn-lg" id="ownerPhotSubmitButton" type="submit">Submit photo labeling</button>
+                                    </div>
+                                    <br/>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                   <div class="text-end mb-5 mb-xl-0">
+                         <a  class="btn btn-lg btn-outline-dark" href="#">
+                             <i class="bi bi-arrow-left"></i>
+                            SUB_PART_REVIEW
+                        </a>
+                        <a  class="btn btn-lg btn-outline-dark" href="#">
+                            Next image
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+
+            </section>
+
+<script>
 
 var countries = ["delamination", "corrosion", "crack", "moisture", "other"];
-
 
 function autocomplete(inp, arr) {
 
@@ -188,45 +224,6 @@ and pass along the countries array as possible autocomplete values:*/
 autocomplete(document.getElementById("myInput"), countries);
 
 
-                                    </script>
-
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control form-check-input" id="id_use_report_img" name="image_labels"
-                                               type="checkbox" placeholder="" data-sb-validations="optional"/>
-                                        <label for="id_use_report_img" class="form-check-label">Include image in final report</label>
-                                    </div>
-
-                                    <!-- Submit Button-->
-                                    <div class="d-grid">
-                                        <button class="btn btn-primary btn-lg" id="ownerPhotSubmitButton" type="submit">Submit photo labeling</button>
-                                    </div>
-                                    <br/>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </section>
-
-<script>
-
-const chooseFile = document.getElementById("id_image");
-const imgPreview = document.getElementById("img-preview");
-chooseFile.addEventListener("change", function () {
-  getImgData();
-});
-
-function getImgData() {
-  const files = chooseFile.files[0];
-  if (files) {
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(files);
-    fileReader.addEventListener("load", function () {
-      imgPreview.style.display = "block";
-      imgPreview.innerHTML = '<img src="' + this.result + '" />';
-    });
-  }
-}
 </script>
+
 {% endblock inner_body %}

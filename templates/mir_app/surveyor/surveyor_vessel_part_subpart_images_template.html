@@ -13,7 +13,7 @@
                         <h1 class="fw-bolder"><a href="https://trello.com/c/TXhPElpY/45-rv220-vessel-part-survey-photos-preview">RV.22.0 Vessel-part survey photos preview</a></h1>
                         <p class="lead fw-normal text-muted mb-0">Preview photos for {{vessel_part}}/{{vessel_subpart}}</p>
                     </div>
-                    <div class="row gx-5">
+                    <!--<div class="row gx-5">
 
                         {% for image in images %}
                         <div class="col-lg-6">
@@ -25,7 +25,7 @@
                             </div>
                         </div>
                         {% endfor %}
-                    </div>
+                    </div>-->
                 </div>
             </section>
 
@@ -34,60 +34,103 @@
                             <div class="col-lg-8 col-xl-6">
 
                                 <div class="col-lg-12" id="findings">
+                                     <div class="row gx-5">
+                                        <h4>Instructions</h4>
+                                         <hr/>
+
+                                         <ul>
+                                             <li>Review each image below and add labels</li>
+                                             <li>Add your findings and recommendations</li>
+                                             <li>Add a synopsis</li>
+                                         </ul>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12" id="findings">
+                                     <div class="row gx-5">
+                                         <h4>{{ vessel_subpart }} images</h4>
+                                         <hr/>
+                                        {% for image in images %}
+                                        <div class="col-lg-6">
+                                            <div class="position-relative mb-5">
+                                                <img width="300" height="300" class="img-fluid rounded-3 mb-3" src="{{ media_url }}/{{ image.0 }}" alt="..." />
+                                                <a class="h4 fw-bolder text-decoration-none link-dark stretched-link"
+                                                   href="{% url 'surveyor-photo-view' surveyor_id survey_id vessel_part vessel_subpart image.1 %}">{{ image.1 }}</a>
+                                                <p>Labels provided?</p>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                </div>
 
                                     <div class="col-lg-12">
                                         <div class="position-relative mb-5">
-                                            <h4>Your findings, recommendations & general comments on the {{ vessel_part }}</h4>
+                                            <h4>Findings & recommendations on the {{ vessel_subpart }}</h4>
                                             <hr/>
                                         </div>
+
+                                        <!--<form id="vesselPartPhotoForm" enctype="multipart/form-data"
+                                          method="post"
+                                          action="{% url 'surveyor-subpart-images-preview' surveyor_id survey_id  vessel_part_id vessel_subpart_id %}">
+                                          {% csrf_token %}-->
+
+                                                <div class="form-floating mb-6">
+                                                    <table id="findingsTable" class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Finding Id</th>
+                                                            <th>Finding description</th>
+                                                            <th>Severity level</th>
+                                                            <th>Image evidence</th>
+                                                            <th>Recommendations</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    </table>
+                                                </div>
+
+                                                <div class="form-floating mb-3">
+                                                    <input class="form-control form-check-input" id="id_use_report_img" name="image_labels"
+                                                   type="checkbox" placeholder="" data-sb-validations="optional"/>
+                                                    <label for="id_use_report_img" class="form-check-label">Check this box if no findings</label>
+                                                </div>
+                                        <!--</form>-->
+
+                                        <div class="col-lg-12">
+                                            <button class="btn btn-outline-dark" id="addFindingBtn">Add finding</button>
+                                        </div>
+                                    </div>
+
+                                    <br/>
+                                    <div class="position-relative mb-5">
+                                           <h4>Synopsis of  the {{ vessel_subpart }}</h4>
+                                            <hr/>
                                     </div>
 
                                     <form id="vesselPartPhotoForm" enctype="multipart/form-data"
                                           method="post"
                                           action="{% url 'surveyor-subpart-images-preview' surveyor_id survey_id  vessel_part_id vessel_subpart_id %}">
                                           {% csrf_token %}
+
                                         <div class="form-floating mb-3">
-                                         <h5>General comments on the {{ vessel_part }} </h5>
                                          <textarea name="editor"></textarea>
                                         </div>
-                                     <script src="//cdn.ckeditor.com/4.19.1/standard/ckeditor.js"></script>
+                                        <script src="//cdn.ckeditor.com/4.19.1/standard/ckeditor.js"></script>
 
-                                     <script>
-                                         CKEDITOR.replace( 'editor' );
-                                     </script>
-
-                                        <div class="form-floating mb-3">
-                                            <h5>Findings & recommendations on the {{ vessel_part }} </h5>
-                                            <table id="findingsTable" class="table table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th>Finding Id</th>
-                                                    <th>Finding description</th>
-                                                    <th>Severity level</th>
-                                                    <th>Image evidence</th>
-                                                    <th>Recommendations</th>
-                                                </tr>
-                                            </thead>
-                                            </table>
-                                        </div>
-
-                                        <div class="form-floating mb-3">
-                                            <input class="form-control form-check-input" id="id_use_report_img" name="image_labels"
-                                               type="checkbox" placeholder="" data-sb-validations="optional"/>
-                                            <label for="id_use_report_img" class="form-check-label">Check this box if no findings</label>
-                                        </div>
+                                        <script>
+                                            CKEDITOR.replace( 'editor' );
+                                        </script>
 
                                     </form>
                                 </div>
                                 <div class="col-lg-12">
-                                        <button class="btn btn-outline-primary" id="addFindingBtn">Add finding</button>
-                                        <button class="btn btn-outline-primary" id="ownerPhotoSubmitButton"
+                                        <button class="btn btn-outline-dark" id="ownerPhotoSubmitButton"
                                                 form="vesselPartPhotoForm"
-                                                type="submit">Submit vessel sub-part review</button>
+                                                type="submit">Add vessel sub-part review</button>
                                         <p>By submitting the review you agree to T&Cs</p>
                                 </div>
                                 <script>
-                                       let findings_counter = 0;
+                                       let findings_counter = 1;
 
                                        $( "#addFindingBtn" ).click(function() {
                                             //alert( "Handler for .click() called." );
@@ -104,13 +147,29 @@
                                                 "<td><select><option>Select</option><option>Minor</option><option>Medium</option><option>Serious</option></select></td>" +
                                                 "<td><select><option>Select</option><option>img-1</option><option>img-2</option></select></td>" +
                                                 "<td><input /></td>" +
+                                                "<td><button id='deleteRow' class='btn btn-outline-danger' onclick=removeRow(" + findings_counter.toString() + ")>Remove row</button></td>" +
                                                 "</tr>");
 
                                             findings_counter++;
                                        });
 
+                                       function removeRow(rowIdx){
+                                            document.getElementById("findingsTable").deleteRow(rowIdx);
+                                            findings_counter--;
+                                       }
                                 </script>
                             </div>
                         </div>
+            </section>
+
+<section class="py-5">
+                <div class="container px-5">
+                    <div class="text-end mb-5 mb-xl-0">
+                        <a  class="btn btn-lg btn-outline-dark" href="#">
+                            Next image
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
             </section>
 {% endblock inner_body %}
