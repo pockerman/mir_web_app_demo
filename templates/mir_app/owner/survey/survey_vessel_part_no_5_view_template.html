@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}mir-app-condition-survey-view{% endblock title %}
+
+{%block inner_body %}
+
+
+            <section class="py-5" xmlns="http://www.w3.org/1999/html">
+                <div class="container px-5">
+                    <h1 class="fw-bolder fs-5 mb-4">
+                        <a href="https://trello.com/c/NyQfUrdN/7-rv190-generate-condition-vessel-survey">RV.41.0 Abnormal items</a>
+                    </h1>
+                    <div class="card border-0 shadow rounded-3 overflow-hidden">
+                        <div class="card-body p-0">
+                            <div class="row gx-0">
+                                <div class="p-4 p-md-5">
+
+                                <p>In this view the owner has to state any abnormal events the vessel has undergone.
+                                They also have to specify items that they have altered. Furthermore,
+                                they have to update dynamic features of the vessel</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+           <section class="py-5">
+                <div class="container px-5">
+                    <!-- Contact form-->
+                    <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
+                        <div class="row gx-5 justify-content-center">
+                            <div class="col-lg-8 col-xl-6">
+                                <form id="generateSurveyForm" method="post"
+                                      action="{% url 'owner-survey-item-no-5' owner_id survey_id vessel_id vessel_part_id %}">
+                                    {% csrf_token %}
+
+                                     <h5>Has the vessel undergone any abnormal events?</h5>
+                                     <div class="form-floating mb-3">
+
+                                         <select id="id_vessel_type" name="survey_type" class="form-select">
+                                              <option value="0">Select</option>
+                                              {% for condition_type in condition_types %}
+                                                <option value={{ condition_type.type }}>{{ condition_type}}</option>
+                                              {% endfor %}
+                                         </select>
+                                    </div>
+                                    <h5>Has there been any significant renewal, upgrade, refit beyond ongoing O&M?</h5>
+                                    <div class="form-floating mb-3">
+
+                                        <textarea class="form-control" id="message" type="text"
+                                                  placeholder="Enter your message here..." style="height: 10rem" data-sb-validations="required">
+
+                                        </textarea>
+                                        <label for="message">e.g. new engine 2022, new sails 2019, new teak deck 2021,
+                                             new liferaft 2022, windlass motor 2020, DC-AC inverter + AC panel 2022</label>
+                                    </div>
+
+                                     <div class="form-floating mb-3">
+                                        <input class="form-control" id="id_engine_hours" name="engine_hours"  type="text"/>
+                                         <label for="id_engine_hours">current engine hours</label>
+                                     </div>
+
+                                    <!--<div class="d-grid"><button class="btn btn-outline-primary btn-lg"
+                                                                id="ownerLoginSubmitButton" type="submit">Generate survey</button></div>-->
+
+                                    <button class="btn btn-outline-primary btn-sm" id="submitAndContBtn"
+                                              type="submit" name="submitAndContBtn">Add survey item survey & continue</button>
+                                      <button class="btn btn-outline-primary btn-sm" id="submitAndSaveBtn"
+                                              type="submit" name="submitAndSaveBtn">Add survey item & exit</button>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+{% endblock inner_body %}
