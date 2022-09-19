@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}mir-app-condition-survey-view{% endblock title %}
+
+{%block inner_body %}
+
+ <!-- Page Content-->
+
+
+            <section class="py-5" xmlns="http://www.w3.org/1999/html">
+                <div class="container px-5">
+                    <h1 class="fw-bolder fs-5 mb-4">
+                        <a href="https://trello.com/c/LvIfPukg/74-rv400-factors-affecting-fit-of-purpose">
+                            RV.40.0 Factors affecting the fitness for purpose</a></h1>
+                </div>
+            </section>
+
+           <section class="py-5 bg-light">
+                <div class="container px-5">
+                    <div class="row gx-5">
+                        <div class="col-xl-8">
+                            <h2 class="fw-bolder fs-5 mb-4">Factors affecting vessel</h2>
+                            <hr/>
+                            <p>In this section the surveyor can view the factors provided by the owner
+                            that may affect the purpose of fit for the vessel e.g</p>
+                             <ul>
+                                 <li>Collisions</li>
+                                 <li>Grounding</li>
+                                 <li>Lightning/Electrical surge</li>
+                                 <li>Broaching/crash-gybe</li>
+                                 <li>Flooding/swamping</li>
+                                 <li>Structural conversions * modifications</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+           </section>
+
+           <section class="py-5 bg-light">
+                <div class="container px-5">
+                    <div class="row gx-5">
+                        <div class="col-xl-8">
+                            <h2 class="fw-bolder fs-5 mb-4">Has there been any significant renewal, upgrade, refit beyond ongoing O&M.</h2>
+                             <hr/>
+                            <p>In this section the surveyor can view the modifications and alternations performed
+                                by the owner (see list below). These are captured as a free text so the will be shown
+                            as a non-editable free-text.</p>
+                             <ul>
+                                 <li>new engine 2022</li>
+                                 <li>new sails 2019</li>
+                                 <li>new teak deck 2021</li>
+                                 <li>new liferaft 2022</li>
+                                 <li>windlass motor 2020</li>
+                                 <li>windlass motor 2020</li>
+                                 <li>DC-AC inverter + AC panel 2022</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="text-end mb-5 mb-xl-0">
+                             <a class="btn btn-lg btn-outline-dark" href="{% url 'write-survey' surveyor_id survey_id 0 %}">
+                                 <i class="bi bi-arrow-left"></i>
+                                 Previous item
+
+                             </a>
+                             <a class="btn btn-lg btn-outline-dark" href="{% url 'write-survey' surveyor_id survey_id 0 %}">
+                                Save & exit
+                             </a>
+                             <a class="btn btn-lg btn-outline-dark" href="{% url 'write-survey' surveyor_id survey_id 0 %}">
+                                Next item
+                                <i class="bi bi-arrow-right"></i>
+                             </a>
+                             <!--<p>By submitting the photos you agree to T&Cs</p>-->
+                         </div>
+                </div>
+
+           </section>
+
+
+
+
+
+
+
+{% endblock inner_body %}

@@ -4,6 +4,8 @@
 {% block title %}mir-app-photo-preview{% endblock title %}
 {%block inner_body %}
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
             <!-- Page Content-->
             <section class="py-5">
                 <div class="container px-5 my-5">
@@ -11,7 +13,7 @@
                         <h1 class="fw-bolder"><a href="https://trello.com/c/TXhPElpY/45-rv220-vessel-part-survey-photos-preview">RV.22.0 Vessel-part survey photos preview</a></h1>
                         <p class="lead fw-normal text-muted mb-0">Preview photos for {{vessel_part}}/{{vessel_subpart}}</p>
                     </div>
-                    <div class="row gx-5">
+                    <!--<div class="row gx-5">
 
                         {% for image in images %}
                         <div class="col-lg-6">
@@ -19,76 +21,155 @@
                                 <img width="300" height="300" class="img-fluid rounded-3 mb-3" src="{{ media_url }}/{{ image.0 }}" alt="..." />
                                 <a class="h4 fw-bolder text-decoration-none link-dark stretched-link"
                                    href="{% url 'surveyor-photo-view' surveyor_id survey_id vessel_part vessel_subpart image.1 %}">{{ image.1 }}</a>
+                                <p>Labels provided?</p>
                             </div>
                         </div>
                         {% endfor %}
-
-
-                    </div>
+                    </div>-->
                 </div>
             </section>
 
             <section class="py-5 bg-light">
                   <div class="row gx-5 justify-content-center">
                             <div class="col-lg-8 col-xl-6">
-                                <form id="vesselPartPhotoForm" enctype="multipart/form-data"
-                                      method="post"  action="{% url 'surveyor-subpart-images-preview' surveyor_id survey_id  vessel_part_id vessel_subpart_id %}">
 
-                                    {% csrf_token %}
+                                <div class="col-lg-12" id="findings">
+                                     <div class="row gx-5">
+                                        <h4>Instructions</h4>
+                                         <hr/>
 
-                                    <div class="col-lg-6">
+                                         <ul>
+                                             <li>Review each image below and add labels</li>
+                                             <li>Add your findings and recommendations</li>
+                                             <li>Add a synopsis</li>
+                                         </ul>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12" id="findings">
+                                     <div class="row gx-5">
+                                         <h4>{{ vessel_subpart }} images</h4>
+                                         <hr/>
+                                        {% for image in images %}
+                                        <div class="col-lg-6">
+                                            <div class="position-relative mb-5">
+                                                <img width="300" height="300" class="img-fluid rounded-3 mb-3" src="{{ media_url }}/{{ image.0 }}" alt="..." />
+                                                <a class="h4 fw-bolder text-decoration-none link-dark stretched-link"
+                                                   href="{% url 'surveyor-photo-view' surveyor_id survey_id vessel_part vessel_subpart image.1 %}">{{ image.1 }}</a>
+                                                <p>Labels provided?</p>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                </div>
+
+                                    <div class="col-lg-12">
                                         <div class="position-relative mb-5">
-                                            <h3>Your findings & recommendations</h3>
+                                            <h4>Findings & recommendations on the {{ vessel_subpart }}</h4>
                                             <hr/>
+                                        </div>
+
+                                        <!--<form id="vesselPartPhotoForm" enctype="multipart/form-data"
+                                          method="post"
+                                          action="{% url 'surveyor-subpart-images-preview' surveyor_id survey_id  vessel_part_id vessel_subpart_id %}">
+                                          {% csrf_token %}-->
+
+                                                <div class="form-floating mb-6">
+                                                    <table id="findingsTable" class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Finding Id</th>
+                                                            <th>Finding description</th>
+                                                            <th>Severity level</th>
+                                                            <th>Image evidence</th>
+                                                            <th>Recommendations</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    </table>
+                                                </div>
+
+                                                <div class="form-floating mb-3">
+                                                    <input class="form-control form-check-input" id="id_use_report_img" name="image_labels"
+                                                   type="checkbox" placeholder="" data-sb-validations="optional"/>
+                                                    <label for="id_use_report_img" class="form-check-label">Check this box if no findings</label>
+                                                </div>
+                                        <!--</form>-->
+
+                                        <div class="col-lg-12">
+                                            <button class="btn btn-outline-dark" id="addFindingBtn">Add finding</button>
                                         </div>
                                     </div>
 
-                                    <!-- password input-->
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" id="id_image_labels" name="image_labels"
-                                               type="text" placeholder="You need to attach at least one label to the image" data-sb-validations="required" />
-                                        <label for="id_image_labels">A comma separated list of labels</label>
-                                    </div>
-
-                                     <!-- Message input-->
-                                    <div class="form-floating mb-3">
-
-                                        <textarea class="form-control" id="id_findings"
-                                                  name="findings"
-                                                  type="text" placeholder="Enter your message here..."
-
-                                                  style="height: 10rem" data-sb-validations="required"></textarea>
-                                        <label for="id_findings">Your findings (required)</label>
-
-                                        {% if error_findings %}
-                                         <p  style="font-size:14px; color:red; font-weight:bold; font-style:italic;">{{ error_findings }}.</p>
-                                        {% endif %}
-
-                                        <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
-                                    </div>
-
-                                     <div class="form-floating mb-3">
-                                        <textarea class="form-control" id="id_recommendations"
-                                                  name="recommendations"
-                                                  type="text" placeholder="Enter your message here..."
-                                                  style="height: 10rem" data-sb-validations="required"></textarea>
-                                        <label for="id_recommendations">Your recommendations (required)</label>
-
-                                          {% if error_recommendations %}
-                                         <p  style="font-size:14px; color:red; font-weight:bold; font-style:italic;">{{ error_recommendations }}.</p>
-                                        {% endif %}
-
-                                        <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
-                                    </div>
-
-                                    <!-- Submit Button-->
-                                    <!--<div class="d-grid">-->
-                                        <button class="btn btn-primary" id="ownerPhotSubmitButton" type="submit">Submit vessel sub-part review</button>
-                                        <p>By submitting the review you agree to T&Cs</p>
-                                    <!--</div>-->
                                     <br/>
-                                </form>
+                                    <div class="position-relative mb-5">
+                                           <h4>Synopsis of  the {{ vessel_subpart }}</h4>
+                                            <hr/>
+                                    </div>
+
+                                    <form id="vesselPartPhotoForm" enctype="multipart/form-data"
+                                          method="post"
+                                          action="{% url 'surveyor-subpart-images-preview' surveyor_id survey_id  vessel_part_id vessel_subpart_id %}">
+                                          {% csrf_token %}
+
+                                        <div class="form-floating mb-3">
+                                         <textarea name="editor"></textarea>
+                                        </div>
+                                        <script src="//cdn.ckeditor.com/4.19.1/standard/ckeditor.js"></script>
+
+                                        <script>
+                                            CKEDITOR.replace( 'editor' );
+                                        </script>
+
+                                    </form>
+                                </div>
+                                <div class="col-lg-12">
+                                        <button class="btn btn-outline-dark" id="ownerPhotoSubmitButton"
+                                                form="vesselPartPhotoForm"
+                                                type="submit">Add vessel sub-part review</button>
+                                        <p>By submitting the review you agree to T&Cs</p>
+                                </div>
+                                <script>
+                                       let findings_counter = 1;
+
+                                       $( "#addFindingBtn" ).click(function() {
+                                            //alert( "Handler for .click() called." );
+
+                                            if ($("#findingsTable tbody").length == 0) {
+                                                $("#findingsTable").append("<tbody></tbody>");
+                                            }
+
+                                            // Append row to the table
+                                            let findings_row = findings_counter.toString()
+                                            $("#findingsTable tbody").append("<tr>" +
+                                                "<td>" + findings_row + "</td>" +
+                                                "<td><input /></td>" +
+                                                "<td><select><option>Select</option><option>Minor</option><option>Medium</option><option>Serious</option></select></td>" +
+                                                "<td><select><option>Select</option><option>img-1</option><option>img-2</option></select></td>" +
+                                                "<td><input /></td>" +
+                                                "<td><button id='deleteRow' class='btn btn-outline-danger' onclick=removeRow(" + findings_counter.toString() + ")>Remove row</button></td>" +
+                                                "</tr>");
+
+                                            findings_counter++;
+                                       });
+
+                                       function removeRow(rowIdx){
+                                            document.getElementById("findingsTable").deleteRow(rowIdx);
+                                            findings_counter--;
+                                       }
+                                </script>
                             </div>
                         </div>
+            </section>
+
+<section class="py-5">
+                <div class="container px-5">
+                    <div class="text-end mb-5 mb-xl-0">
+                        <a  class="btn btn-lg btn-outline-dark" href="#">
+                            Next image
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
             </section>
 {% endblock inner_body %}

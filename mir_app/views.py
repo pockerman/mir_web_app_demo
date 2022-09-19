@@ -25,12 +25,15 @@ from mir_app.survey_views import SurveyViewHandler
 from mir_app.subscription_views import SubscriptionsViewHandler
 from mir_app.surveyor_views import SurveyorViewHandler
 from mir_app.template_views import template_ids
-from mir_app.config import MIR_APP_REST_API
 
-MIR_APP_REST_API = 'http://127.0.0.1:8000/api/v1/'
-SURVEYS_PATH = Path("/home/alex/qi3/mir_app_web_app/surveys")
-OWNER_ID = '6306179d0eb28a571d11c282'
-TOTAL_IMAGE_COUNTER = 5
+from mir_app.config import MIR_APP_REST_API
+from mir_app.config import TOTAL_IMAGE_COUNTER
+from mir_app.config import SURVEYS_PATH
+
+#MIR_APP_REST_API = 'http://127.0.0.1:8000/api/v1/'
+#SURVEYS_PATH = Path("/home/alex/qi3/mir_app_web_app/surveys")
+#OWNER_ID = '6306179d0eb28a571d11c282'
+#TOTAL_IMAGE_COUNTER = 5
 
 
 def keep_user_log_in(request, context):
@@ -476,6 +479,14 @@ def download_survey(request, owner_id: str, survey_id: str, filename='survey.pdf
     return SurveyViewHandler.download_survey(request=request, owner_id=owner_id,
                                              survey_id=survey_id, filename=filename)
 
+@login_required(login_url='/login/')
+def owner_survey_vessel_part_no_5(request, owner_id: str,
+                                      survey_id: str, vessel_id: str,
+                                      vessel_part_id: str):
+    return SurveyViewHandler.owner_survey_vessel_part_no_5(request=request,
+                                                           owner_id=owner_id, survey_id=survey_id,
+                                                           vessel_id=vessel_id, vessel_part_id=vessel_part_id)
+
 
 def verify_surveyor_email(request, surveyor_id: str):
 
@@ -512,6 +523,7 @@ def surveyor_survey_view(request, surveyor_id: str, survey_id: str):
     template = loader.get_template(template_ids['surveyor_survey_view'])
     return SurveyorViewHandler.surveyor_survey_view(request=request, surveyor_id=surveyor_id,
                                                     survey_id=survey_id, template=template)
+
 
 @login_required(login_url='/login/')
 def surveyor_start_survey_view(request, surveyor_id: str, survey_id: str):
@@ -557,7 +569,7 @@ def surveyor_vessel_part_subpart_images(request, surveyor_id: str,
                                                                    vessel_subpart=vessel_subpart, template=template)
 """
 
-
+@login_required(login_url='/login/')
 def surveyor_photo_view(request, surveyor_id: str, survey_id,
                         vessel_part: str, vessel_subpart: str,
                         img_url: str):
@@ -576,7 +588,7 @@ def surveyor_photo_view(request, surveyor_id: str, survey_id,
     return HttpResponse(template.render(context, request))
 
 
-
+@login_required(login_url='/login/')
 def delete_surveyor(request, surveyor_id: str):
     """Handles the delete view
 
@@ -596,9 +608,7 @@ def delete_surveyor(request, surveyor_id: str):
     return redirect(to='/login/')
 
 
-
-
-
+@login_required(login_url='/login/')
 def submit_survey_surveyor(request, surveyor_id: str, survey_id: str):
     """Submits the survey from the surveyor side
 

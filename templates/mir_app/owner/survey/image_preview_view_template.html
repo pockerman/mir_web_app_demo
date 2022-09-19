@@ -27,14 +27,6 @@
                         </div>
                         {% endfor %}
 
-                        {% if add_more_photos_btn %}
-
-
-                         `  <div class="container px-5 my-5">
-                              <a href="{% url 'take-survey-photo-view' owner_id survey_id  vessel_part survey_part_id %}"
-                                 class="btn btn-success" id="ownerLoginSubmitButton" type="submit">Add more photos</a>
-                            </div>
-                        {% endif %}
                     </div>
                 </div>
             </section>
@@ -46,11 +38,23 @@
                            action="{% url 'vessel-part-subpart-image-preview' owner_id survey_id  vessel_part survey_part_id %}">
                          {% csrf_token %}
                          <div class="container px-5 my-5">
+
                               {% if error_message %}
-                        <p  style="font-size:14px; color:red; font-weight:bold; font-style:italic;">{{ error_message }}.</p>
-                     {% endif %}
-                                      <button class="btn btn-primary" id="ownerLoginSubmitButton" type="submit">Submit photos</button>
-                             <p>By submitting the photos you agree to T&Cs</p>
+                                    <p  style="font-size:14px; color:red; font-weight:bold; font-style:italic;">{{ error_message }}.</p>
+                                {% endif %}
+                                      
+                                    <button class="btn btn-outline-primary" id="ownerSubmitBtn" type="submit">Submit photos</button>
+
+                                    {% if add_more_photos_btn %}
+
+                                        <a href="{% url 'take-survey-photo-view' owner_id survey_id  vessel_part survey_part_id %}"
+                                           class="btn btn-outline-primary" id="ownerAddMorePhotosBtn" type="submit">Add more photos</a>
+                        
+                                    {% endif %}
+
+                                    <p>By submitting the photos you agree to T&Cs</p>
+
+
                          </div>
 
 

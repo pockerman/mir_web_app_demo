@@ -11,17 +11,22 @@
                     <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
                         <div class="text-center mb-5">
                             <!--<div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-envelope"></i></div>-->
-                            <h1 class="fw-bolder"><a href="https://trello.com/c/O84M3cNn/64-rv33-view-vessel-part-subpart-photo">RV.33. View vessel-part subpart photo</a></a></h1>
-                            <p class="lead fw-normal text-muted mb-0">... not of yourself</p>
+                            <h1 class="fw-bolder">
+                                <a href="https://trello.com/c/O84M3cNn/64-rv33-view-vessel-part-subpart-photo">RV.33. View vessel-part subpart photo</a>
+                            </h1>
+                            <!--<p class="lead fw-normal text-muted mb-0">... not of yourself</p>-->
                         </div>
 
                          <div class="text-center mb-5">
-                             <p class="lead fw-normal text-muted mb-0">Inspect the image and act...</p>
+                             <p class="lead fw-normal text-muted mb-0">Image 1/5</p>
+                             <p class="lead fw-normal text-muted mb-0">Please provide a label for the image</p>
                         </div>
 
                         <div class="row gx-5 justify-content-center">
                             <div class="col-lg-8 col-xl-6">
-                                <form id="vesselPartPhotoForm" enctype="multipart/form-data" method="post"  action=".">
+                                <form id="vesselPartPhotoForm"
+                                      autocomplete="off"
+                                      enctype="multipart/form-data" method="post"  action=".">
 
                                     {% csrf_token %}
 
@@ -33,68 +38,192 @@
                                         </div>
                                     </div>
 
-                                    <!-- password input-->
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" id="id_image_labels" name="image_labels"
-                                               type="text" placeholder="You need to attach at least one label to the image" data-sb-validations="required" />
-                                        <label for="id_image_labels">A comma separated list of labels (required)</label>
+                                    <div class="autocomplete form-floating mb-3">
+                                        <input class="form-control" id="myInput" name="image_labels"
+                                               type="text"
+                                               placeholder="You need to attach at least one label to the image"
+                                               data-sb-validations="required" />
+                                        <label for="myInput">A comma separated list of labels (required)</label>
                                     </div>
 
-                                     <!-- Message input-->
-                                    <div class="form-floating mb-3">
 
-                                        <textarea class="form-control" id="id_findings" type="text" placeholder="Enter your message here..."
-                                                  style="height: 10rem" data-sb-validations="required"></textarea>
-                                        <label for="id_findings">Your findings (optional)</label>
+                                    <!-- Message input-->
+                                    <div class="form-floating mb-3">
+                                        <textarea class="form-control" id="message" type="text"
+                                                  placeholder="Enter your message here..." style="height: 10rem" data-sb-validations="required">
+
+                                        </textarea>
+                                        <label for="message">if other has been selected please specify</label>
                                         <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
                                     </div>
 
-                                     <div class="form-floating mb-3">
-                                        <textarea class="form-control" id="id_recommendations" type="text" placeholder="Enter your message here..."
-                                                  style="height: 10rem" data-sb-validations="required"></textarea>
-                                        <label for="id_recommendations">Your recommendations (optional)</label>
-                                        <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
-                                    </div>
-
-                                    <div class="form-floating mb-4">
+                                    <div class="form-floating mb-3">
                                         <input class="form-control form-check-input" id="id_use_report_img" name="image_labels"
                                                type="checkbox" placeholder="" data-sb-validations="optional"/>
                                         <label for="id_use_report_img" class="form-check-label">Include image in final report</label>
                                     </div>
 
-                                    <!-- This is what your users will see when there is-->
-                                    <!-- an error submitting the form-->
-                                    <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
-
                                     <!-- Submit Button-->
-                                    <div class="d-grid"><button class="btn btn-primary btn-lg" id="ownerPhotSubmitButton" type="submit">Submit photo review</button></div>
+                                    <div class="d-grid">
+                                        <button class="btn btn-outline-dark btn-lg" id="ownerPhotSubmitButton" type="submit">Submit photo labeling</button>
+                                    </div>
                                     <br/>
                                 </form>
                             </div>
                         </div>
                     </div>
-
+                   <div class="text-end mb-5 mb-xl-0">
+                         <a  class="btn btn-lg btn-outline-dark" href="#">
+                             <i class="bi bi-arrow-left"></i>
+                            SUB_PART_REVIEW
+                        </a>
+                        <a  class="btn btn-lg btn-outline-dark" href="#">
+                            Next image
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
                 </div>
+
+
             </section>
 
 <script>
 
-const chooseFile = document.getElementById("id_image");
-const imgPreview = document.getElementById("img-preview");
-chooseFile.addEventListener("change", function () {
-  getImgData();
-});
+var countries = ["delamination", "corrosion", "crack", "moisture", "other"];
 
-function getImgData() {
-  const files = chooseFile.files[0];
-  if (files) {
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(files);
-    fileReader.addEventListener("load", function () {
-      imgPreview.style.display = "block";
-      imgPreview.innerHTML = '<img src="' + this.result + '" />';
-    });
+function autocomplete(inp, arr) {
+
+     /*the autocomplete function takes two arguments,
+       the text field element and an array of possible autocompleted values:*/
+
+      var currentFocus;
+
+      /*execute a function when someone writes in the text field:*/
+      inp.addEventListener("input", function(e) {
+
+          var a, b, i, val = this.value;
+          /*close any already open lists of autocompleted values*/
+          closeAllLists();
+
+          if (!val) { return false;}
+
+          currentFocus = -1;
+
+          /*create a DIV element that will contain the items (values):*/
+          a = document.createElement("DIV");
+          a.setAttribute("id", this.id + "autocomplete-list");
+          a.setAttribute("class", "autocomplete-items");
+
+          /*append the DIV element as a child of the autocomplete container:*/
+          this.parentNode.appendChild(a);
+
+          /*check if the item starts with the same letters as the text field value:*/
+           console.log(val)
+
+           val_to_check = val
+
+           if (val_to_check.indexOf(',') > -1) {
+                console.log(val_to_check.split(','));
+                val_to_check = val_to_check.split(',').at(-1);
+                console.log(val_to_check);
+           }
+
+           console.log(val_to_check)
+
+           /*for each item in the array...*/
+           for (i = 0; i < arr.length; i++) {
+
+            if (arr[i].substr(0, val_to_check.length).toUpperCase() == val_to_check.toUpperCase()) {
+
+                console.log("Adding item ", val_to_check)
+
+                /*create a DIV element for each matching element:*/
+                b = document.createElement("DIV");
+
+                /*make the matching letters bold:*/
+                b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                b.innerHTML += arr[i].substr(val.length);
+
+                /*insert a input field that will hold the current array item's value:*/
+                b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+
+                /*execute a function when someone clicks on the item value (DIV element):*/
+                b.addEventListener("click", function(e) {
+
+                    /*insert the value for the autocomplete text field:*/
+                    inp.value = this.getElementsByTagName("input")[0].value;
+
+                    /*close the list of autocompleted values,
+                    (or any other open lists of autocompleted values:*/
+                    //closeAllLists();
+                });
+
+          a.appendChild(b);
+        }
+      }
+  });
+  /*execute a function presses a key on the keyboard:*/
+  inp.addEventListener("keydown", function(e) {
+      var x = document.getElementById(this.id + "autocomplete-list");
+      if (x) x = x.getElementsByTagName("div");
+      if (e.keyCode == 40) {
+        /*If the arrow DOWN key is pressed,
+        increase the currentFocus variable:*/
+        currentFocus++;
+        /*and and make the current item more visible:*/
+        addActive(x);
+      } else if (e.keyCode == 38) { //up
+        /*If the arrow UP key is pressed,
+        decrease the currentFocus variable:*/
+        currentFocus--;
+        /*and and make the current item more visible:*/
+        addActive(x);
+      } else if (e.keyCode == 13) {
+        /*If the ENTER key is pressed, prevent the form from being submitted,*/
+        e.preventDefault();
+        if (currentFocus > -1) {
+          /*and simulate a click on the "active" item:*/
+          if (x) x[currentFocus].click();
+        }
+      }
+  });
+  function addActive(x) {
+    /*a function to classify an item as "active":*/
+    if (!x) return false;
+    /*start by removing the "active" class on all items:*/
+    removeActive(x);
+    if (currentFocus >= x.length) currentFocus = 0;
+    if (currentFocus < 0) currentFocus = (x.length - 1);
+    /*add class "autocomplete-active":*/
+    x[currentFocus].classList.add("autocomplete-active");
+  }
+  function removeActive(x) {
+    /*a function to remove the "active" class from all autocomplete items:*/
+    for (var i = 0; i < x.length; i++) {
+      x[i].classList.remove("autocomplete-active");
+    }
+  }
+  function closeAllLists(elmnt) {
+    /*close all autocomplete lists in the document,
+    except the one passed as an argument:*/
+    var x = document.getElementsByClassName("autocomplete-items");
+    for (var i = 0; i < x.length; i++) {
+      if (elmnt != x[i] && elmnt != inp) {
+      x[i].parentNode.removeChild(x[i]);
+    }
   }
 }
+/*execute a function when someone clicks in the document:*/
+document.addEventListener("click", function (e) {
+    closeAllLists(e.target);
+});
+}
+
+/*initiate the autocomplete function on the "myInput" element,
+and pass along the countries array as possible autocomplete values:*/
+autocomplete(document.getElementById("myInput"), countries);
+
+
 </script>
+
 {% endblock inner_body %}

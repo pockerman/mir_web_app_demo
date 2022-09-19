@@ -32,42 +32,57 @@
                             <table class="table table-hover">
                                 <thead>
                                   <tr>
-                                    <th>Structure</th>
+                                    <th>Item</th>
                                     <th>Completed</th>
                                     <th>Total number of photos</th>
+                                    <th>Number of defects</th>
                                   </tr>
                                 </thead>
                                 <tbody>
                                 {% for sub_part in parts %}
                                   <tr>
-                                    <td><a href="{% url 'surveyor-subpart-images-preview' surveyor_id survey_id vessel_part_id sub_part.0 %}"> {{ sub_part.1 }}</a></td>
+                                    <td><a href="{% url 'surveyor-subpart-images-preview' surveyor_id survey_id vessel_part_id sub_part.0 %}">
+                                        {{ sub_part.1 }}</a></td>
                                     <td>{{ sub_part.2 }}</td>
                                     <td>{{ sub_part.3 }}</td>
+                                      <td>10</td>
                                   </tr>
                                 {% endfor %}
                                 </tbody>
                             </table>
                         </div>
+
+                        <div class="col-xl-8">
+                             <form id="vesselPartGetPreviewForm" method="post"
+                               action=".">
+                             {% csrf_token %}
+
+                             <div class="form-floating mb-3">
+                                 <h5>Synopsis on the {{ vessel_part }} </h5>
+                                 <hr/>
+                                 <textarea name="editor"></textarea>
+                             </div>
+                              <script src="//cdn.ckeditor.com/4.19.1/standard/ckeditor.js"></script>
+
+                             <script>
+                                 CKEDITOR.replace( 'editor' );
+                             </script>
+
+                             {% if error_message %}
+                                <p  style="font-size:14px; color:red; font-weight:bold; font-style:italic;">{{ error_message }}.</p>
+                             {% endif %}
+
+                             <button class="btn btn-outline-dark btn-lg" id="submitAndContBtn"
+                                     type="submit" name="submitAndContBtn">Add vessel part survey & continue</button>
+
+                             <button class="btn btn-outline-dark btn-lg" id="submitAndSaveBtn"
+                                     type="submit" name="submitAndSaveBtn">Add vessel part survey & save</button>
+                             <p>By submitting the photos you agree to T&Cs</p>
+                         </form>
+                    </div>
+
                     </div>
                 </div>
-            </section>
-
-            <section class="py-5 bg-light">
-
-                 <div class="container px-5 my-5">
-                     <form id="vesselPartGetPreviewForm" method="post"
-                           action=".">
-                         {% csrf_token %}
-                         {% if error_message %}
-                        <p  style="font-size:14px; color:red; font-weight:bold; font-style:italic;">{{ error_message }}.</p>
-                     {% endif %}
-                                      <button class="btn btn-primary btn-lg" id="submitAndContBtn"
-                                              type="submit" name="submitAndContBtn">Submit vessel part survey & continue</button>
-                                      <button class="btn btn-primary btn-lg" id="submitAndSaveBtn"
-                                              type="submit" name="submitAndSaveBtn">Submit vessel part survey & save</button>
-                         <p>By submitting the photos you agree to T&Cs</p>
-                     </form>
-                 </div>
             </section>
 
 {% endblock inner_body %}

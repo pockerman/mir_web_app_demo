@@ -20,13 +20,13 @@ def handle_vessel_registration(request, owner_id):
         form_data = form.cleaned_data
         print(form_data)
 
-        vessel_type_url = MIR_APP_REST_API + f'vessels/types/{form_data["vessel_type"]}'
-        vessel_type_response = requests.get(url=vessel_type_url)
-        vessel_type_response = vessel_type_response.json()
+        #vessel_type_url = MIR_APP_REST_API + f'vessels/types/{form_data["vessel_type"]}'
+        #vessel_type_response = requests.get(url=vessel_type_url)
+        #vessel_type_response = vessel_type_response.json()
 
         data = {"owner_idx": owner_id,
                 "name": form_data['vessel_name'],
-                "vessel_type": vessel_type_response['type'],
+                "vessel_type": form_data['vessel_type'],
                 'mmsi': form_data['mmsi_id'],
                 'ce': form_data['ce_id'],
                 "propulsion_type": "motor",
@@ -46,9 +46,8 @@ def handle_vessel_registration(request, owner_id):
                 },
                 "hull": {
                   "idx": "l102",
-                  "construction": "wood"
+                  "construction_type": form_data['construction_material_type']
                },
-               "token": owner_id
         }
 
         data = json.dumps(data)
@@ -57,8 +56,6 @@ def handle_vessel_registration(request, owner_id):
         request = requests.post(url=url, data=data)
         return request
     else:
-        #print(form.errors)
-        #print(form.as_ul())
         raise ValueError("VesselRegistration is invalid")
 
 
@@ -79,8 +76,6 @@ def handle_uploaded_img(request, survey_id: str, owner_id: str, vessel_id: str, 
     if form.is_valid():
         return form.cleaned_data
     else:
-        print(form.errors)
-        print(form.as_ul())
         raise ValueError("UploadImgForm is invalid")
 
 

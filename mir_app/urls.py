@@ -65,9 +65,6 @@ urlpatterns = [
     path('owner/<str:owner_id>/vessel/<str:vessel_id>/surveys/condition-survey/<str:survey_id>/',
          views.generate_condition_survey_view, name='generate-condition-survey'),
 
-    #path('owner/<str:owner_id>/vessel/<str:vessel_id>/surveys/condition-survey/<str:survey_id>/submit-survey/',
-    #     views.submit_survey, name='submit-survey'),
-
     path('owner/<str:owner_id>/surveys/condition-survey/<str:survey_id>/<str:vessel_part_id>/vessel-part-survey-parts/',
          views.vessel_part_survey_parts_view, name='vessel-part-survey-parts'),
 
@@ -77,9 +74,8 @@ urlpatterns = [
     path('owner/<str:owner_id>/surveys/condition-survey/<str:survey_id>/take-photo/<str:vessel_part>/<str:survey_part_id>/',
          views.take_survey_photo_view, name='take-survey-photo-view'),
 
-
-    #path('surveys/condition-survey/<str:owner_id>/<str:vessel_id>/<str:survey_id>/<str:vessel_part>/<str:vessel_subpart>/submit-photos',
-    #     views.submit_photos, name='submit_photos'),
+    path('owner/<str:owner_id>/surveys/condition-survey/<str:survey_id>/<str:vessel_id>/<str:vessel_part_id>/survey-item-no-5/',
+         views.owner_survey_vessel_part_no_5, name='owner-survey-item-no-5'),
 
     path('surveys/submit-survey/<str:owner_id>/<str:vessel_id>/<str:survey_id>',
          views.submit_survey, name='submit_survey'),

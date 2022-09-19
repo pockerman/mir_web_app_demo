@@ -4,10 +4,10 @@
 {%block inner_body %}
 
             <!-- Page Content-->
-<section class="py-5" xmlns="http://www.w3.org/1999/html">
+            <section class="py-5" xmlns="http://www.w3.org/1999/html">
                 <div class="container px-5">
                     <h1 class="fw-bolder fs-5 mb-4">
-                        <a href="https://trello.com/c/NyQfUrdN/7-rv190-generate-condition-vessel-survey">RV.19.0 Generate Condition vessel survey</a>
+                        <a href="https://trello.com/c/NyQfUrdN/7-rv190-generate-condition-vessel-survey">RV.19.0 Condition vessel survey</a>
                     </h1>
                     <div class="card border-0 shadow rounded-3 overflow-hidden">
                         <div class="card-body p-0">
@@ -35,12 +35,12 @@
                 <div class="container px-5">
                     <div class="row gx-5">
                         <div class="col-xl-8">
-                            <h2 class="fw-bolder fs-5 mb-4">Vessel parts to survey</h2>
+                            <h2 class="fw-bolder fs-5 mb-4">Vessel items to survey</h2>
                             <hr/>
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                    <th>Structure</th>
+                                    <th>Item</th>
                                     <th>Completed</th>
                                     <th>Total number of photos</th>
                                   </tr>
@@ -71,8 +71,10 @@
                      <form id="vesselPartGetPreviewForm" method="post"
                            action="{% url 'generate-condition-survey' owner_id vessel_id survey_id %}">
                          {% csrf_token %}
-                                      <button class="btn btn-primary btn-lg" id="ownerLoginSubmitButton" type="submit">Submit survey</button>
-                         <p>By submitting the photos you agree to T&Cs</p>
+
+                         <button class="btn btn-outline-primary btn-lg" id="ownerSubmitSurveyBtn" type="submit">Submit survey</button>
+                         <p>By submitting this survey you agree to T&Cs.  <button class="btn btn-outline-primary btn-sm"
+                                                                                  id="tAndCBtn" type="submit">Review T&Cs</button></p>
                      </form>
                  </div>
             </section>

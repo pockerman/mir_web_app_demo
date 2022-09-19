@@ -44,46 +44,53 @@
                 </div>
 
             {% for item in item_wrapper_parts %}
-                  
+
                         <div class="col-xl-8">
-                            <h3 class="fw-bolder fs-5 mb-4">{{ item }}</h3>
-                            <hr/>
+                                <h3 class="fw-bolder fs-5 mb-4">{{ item }}</h3>
+                                <hr/>
+                                <div class="form-floating mb-3">
 
-                             <!-- Message input-->
-                                    <div class="form-floating mb-3">
-
-                                        <textarea class="form-control" id="id_findings"
-                                                  name="findings"
-                                                  type="text" placeholder="Enter your message here..."
-
-                                                  style="height: 10rem" data-sb-validations="required"></textarea>
-                                        <label for="id_findings">This box should show the findings of the surveyor
-                                            if these have been filled in (optional)</label>
-
-                                        {% if error_findings %}
-                                         <p  style="font-size:14px; color:red; font-weight:bold; font-style:italic;">{{ error_findings }}.</p>
-                                        {% endif %}
-
-                                        <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
-                                    </div>
-
-                                    <div class="form-floating mb-3">
-                                        <textarea class="form-control" id="id_recommendations"
-                                                  name="recommendations"
-                                                  type="text" placeholder="Enter your message here..."
-                                                  style="height: 10rem" data-sb-validations="required"></textarea>
-                                        <label for="id_recommendations">This box should show the recommendations of the surveyor
-                                            if these have been filled in (optional)</label>
-
-                                          {% if error_recommendations %}
-                                         <p  style="font-size:14px; color:red; font-weight:bold; font-style:italic;">{{ error_recommendations }}.</p>
-                                        {% endif %}
-
-                                        <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
-                                    </div>
+                                         <table id="findingsTable" class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Finding Id</th>
+                                                    <th>Finding description</th>
+                                                    <th>Severity level</th>
+                                                    <th>Image evidence</th>
+                                                    <th>Recommendations</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>1.1.1</td>
+                                                    <td>Found a hole</td>
+                                                    <td>Minor</select></td>
+                                                    <td>img-1</select></td>
+                                                    <td>Look at a big hole on your vessel</td>
+                                                    <td><a href="#">Edit</a>/<a href="#">Delete</a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>1.1.2</td>
+                                                    <td>Found a hole</td>
+                                                    <td>Serious</td>
+                                                    <td>img-2</td>
+                                                    <td>Look at a big hole on your vessel</td>
+                                                    <td><a href="#">Edit</a>/<a href="#">Delete</a></td>
+                                                </tr>
+                                            </tbody>
+                                         </table>
+                                </div>
                         </div>
 
 {% endfor %}
+
+                          <div class="form-floating mb-3">
+                              <h5>General comments on the {{ item_wrapper_type }} <a href="#">Edit</a>/<a href="#">Delete</a></td></h5>
+                              <textarea name="editor"></textarea>
+                          </div>
+                          <script src="//cdn.ckeditor.com/4.19.1/standard/ckeditor.js"></script>
+                          <script>CKEDITOR.replace( 'editor' );</script>
                     </div>
                 </div>
             </section>
@@ -92,7 +99,7 @@
             <section class="py-5">
                 <div class="container px-5">
                     <div class="text-end mb-5 mb-xl-0">
-                        <a  class="btn btn-lg btn-outline-dark" href="{% url 'write-survey' surveyor_id survey_id 10 %}">
+                        <a  class="btn btn-lg btn-outline-dark" href="{% url 'write-survey' surveyor_id survey_id 1 %}">
                             Next item
                             <i class="bi bi-arrow-right"></i>
                         </a>
