@@ -27,12 +27,12 @@
                 <div class="container px-5">
                     <div class="row gx-5">
                         <div class="col-xl-8">
-                            <h2 class="fw-bolder fs-5 mb-4">{{ vessel_part }} items to survey</h2>
+                            <h2 class="fw-bolder fs-5 mb-4">{{ vessel_part }} items to survey {{ vessel_part_code }}</h2>
                             <hr/>
                             <table class="table table-hover">
                                 <thead>
                                   <tr>
-                                    <th>Structure</th>
+                                    <th>Item</th>
                                     <th>Completed</th>
                                     <th>Total number of photos</th>
                                   </tr>
@@ -40,7 +40,8 @@
                                 <tbody>
                                 {% for sub_part in vessel_parts %}
                                   <tr>
-                                    <td><a href="{% url 'take-survey-photo-view' owner_id survey_id  vessel_part sub_part.0 %}"> {{ sub_part.1 }}</a></td>
+                                    <td><a href="{% url 'take-survey-photo-view' owner_id survey_id  vessel_part_code sub_part.0 %}">
+                                        {{ sub_part.1 }}</a></td>
                                     <td>{{ sub_part.2 }}</td>
                                     <td>{{ sub_part.3 }}</td>
                                   </tr>
@@ -62,9 +63,9 @@
                         <p  style="font-size:14px; color:red; font-weight:bold; font-style:italic;">{{ error_message }}.</p>
                      {% endif %}
                                       <button class="btn btn-outline-primary btn-lg" id="submitAndContBtn"
-                                              type="submit" name="submitAndContBtn">Add vessel part survey & continue</button>
+                                              type="submit" name="submitAndContBtn">Add survey items & continue</button>
                                       <button class="btn btn-outline-primary btn-lg" id="submitAndSaveBtn"
-                                              type="submit" name="submitAndSaveBtn">Add vessel part survey & exit</button>
+                                              type="submit" name="submitAndSaveBtn">Add survey items & exit</button>
                          <p>By submitting the photos you agree to T&Cs</p>
                      </form>
                  </div>

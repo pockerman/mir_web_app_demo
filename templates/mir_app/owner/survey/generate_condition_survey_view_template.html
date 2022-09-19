@@ -35,7 +35,7 @@
                 <div class="container px-5">
                     <div class="row gx-5">
                         <div class="col-xl-8">
-                            <h2 class="fw-bolder fs-5 mb-4">Vessel parts to survey</h2>
+                            <h2 class="fw-bolder fs-5 mb-4">Vessel items to survey</h2>
                             <hr/>
                             <table class="table table-hover">
                                 <thead>
@@ -72,8 +72,9 @@
                            action="{% url 'generate-condition-survey' owner_id vessel_id survey_id %}">
                          {% csrf_token %}
 
-                         <button class="btn btn-outline-primary btn-lg" id="ownerLoginSubmitButton" type="submit">Submit survey</button>
-                         <p>By submitting the photos you agree to T&Cs</p>
+                         <button class="btn btn-outline-primary btn-lg" id="ownerSubmitSurveyBtn" type="submit">Submit survey</button>
+                         <p>By submitting this survey you agree to T&Cs.  <button class="btn btn-outline-primary btn-sm"
+                                                                                  id="tAndCBtn" type="submit">Review T&Cs</button></p>
                      </form>
                  </div>
             </section>

@@ -43,12 +43,12 @@
                                     <p  style="font-size:14px; color:red; font-weight:bold; font-style:italic;">{{ error_message }}.</p>
                                 {% endif %}
                                       
-                                    <button class="btn btn-outline-dark" id="ownerLoginSubmitButton" type="submit">Submit photos</button>
+                                    <button class="btn btn-outline-primary" id="ownerSubmitBtn" type="submit">Submit photos</button>
 
                                     {% if add_more_photos_btn %}
 
                                         <a href="{% url 'take-survey-photo-view' owner_id survey_id  vessel_part survey_part_id %}"
-                                           class="btn btn-outline-dark" id="ownerLoginSubmitButton" type="submit">Add more photos</a>
+                                           class="btn btn-outline-primary" id="ownerAddMorePhotosBtn" type="submit">Add more photos</a>
                         
                                     {% endif %}
 

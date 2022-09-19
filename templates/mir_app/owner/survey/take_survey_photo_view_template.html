@@ -17,7 +17,7 @@
                         </div>
 
                          <div class="text-center mb-5">
-                            <p class="lead fw-normal text-muted mb-0">You can upload up to 5 images or 500MB for {{ vessel_subpart }}</p>
+                            <p class="lead fw-normal text-muted mb-0">You can upload up to 5 images or 15MB for {{ vessel_subpart }}</p>
                              <p class="lead fw-normal text-muted mb-0">You have uploaded {{ img_counter }}/{{total_img_counter}}</p>
                         </div>
 
@@ -55,7 +55,7 @@
                                         {% if error_form %}
                                         <p  style="font-size:14px; color:red; font-weight:bold; font-style:italic;">{{ error_form }}.</p>
                                         {% endif %}
-                                        <button class="btn btn-primary btn-lg" id="ownerPhotSubmitButton" type="submit">add photo</button>
+                                        <button class="btn btn-outline-primary btn-md" id="ownerPhotSubmitButton" type="submit">Add photo</button>
                                     </div>
                                 </form>
 
@@ -63,7 +63,7 @@
                                 <div class="d-grid">
                                     <form id="vesselPartGetPreviewForm" method="get"
                                           action="{% url 'vessel-part-subpart-image-preview' owner_id survey_id vessel_part survey_part_id %}">
-                                      <button class="btn btn-primary btn-lg" id="ownerLoginSubmitButton" type="submit">Done</button>
+                                      <button class="btn btn-outline-primary btn-lg" id="ownerLoginSubmitButton" type="submit">Done</button>
                                     </form>
                                 </div>
 

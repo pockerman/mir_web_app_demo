@@ -479,6 +479,14 @@ def download_survey(request, owner_id: str, survey_id: str, filename='survey.pdf
     return SurveyViewHandler.download_survey(request=request, owner_id=owner_id,
                                              survey_id=survey_id, filename=filename)
 
+@login_required(login_url='/login/')
+def owner_survey_vessel_part_no_5(request, owner_id: str,
+                                      survey_id: str, vessel_id: str,
+                                      vessel_part_id: str):
+    return SurveyViewHandler.owner_survey_vessel_part_no_5(request=request,
+                                                           owner_id=owner_id, survey_id=survey_id,
+                                                           vessel_id=vessel_id, vessel_part_id=vessel_part_id)
+
 
 def verify_surveyor_email(request, surveyor_id: str):
 
